@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monthly planner generator</title>
+    <!--fonts google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;400;500;600;700&family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+    <!--fonts google-->
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style-preview.css" />
+  </head>
+  <body>
+    <header id="start">
+      <!--bílé pattern pozadí, 
+        logo, nav v rámci stránky-->
+      <h1><a href="#start">Monthly planner generator</a></h1>
+      <nav>
+        <span id="menu-icon"></span>
+        <ul id="resp-nav">
+          <li><a href="#generator">Generator</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </nav>
+    </header>
+    <aside id="about">
+      <!--černé pattern pozadí, s návodem-->
+      <h2>About this webpage</h2>
+      <article>
+        <p>
+          The most usefull thing for planning - at least for me - is a monthly
+          planner. I used to have very pretty large diaries, but soon during the
+          year I´ve noticed that I hardly open them. I was also lazy to turn the
+          pages to see if I haven´t forget something to do in the previous
+          weeks. Monthly planner helped me a lot with organizing stuff, because
+          it is simply just one page. It feels lighter and more fresh then just
+          enormous amount of pages.
+        </p>
+        <p>
+          It´s absolutely awesome to be able to see everything in one place. I
+          can place the planner anywhere on my desk, so I can see it all the
+          time, and it is super-easy to just edit or adjust something in it. I
+          still have a diary - but all the meetings, upcoming journeys,
+          birthdays, planes for baking etc., everything I have on my monthly
+          planner. My diary became just nice little book for small rituals such
+          as visualisation, setting goals for upcoming month, or simply drawing.
+        </p>
+        <p>
+          Since my love for monthly planners is eternal and I am learning how to
+          code, I decided to make a monthly planner generator. If you strugle
+          with your design, just look in the
+          <a href="#gallery" class="link-in-text">gallery</a> for an
+          inspiration! You can also find there possible ways how to use your
+          monthly planner.
+        </p>
+      </article>
+    </aside>
+    <main id="generator">
+      <h2>Generate your own planner!</h2>
+      <!--bílé pattern pozadí
+        form + náhled ledna ve flexboxu pro responzivnost, 
+        pod vším pak vycentrované tlačítko na stáhnutí (napojené na js)-->
+      <section id="generator-section">
+        <!--kvůli tlačítku je v main další element-->
+        <form id="generator-form">
+          <p>
+            Fill this form according to your preference -
+            <span id="text-change">on the left side</span> you can see a preview
+            of January:
+          </p>
+          <table>
+            <tr>
+              <th><label for="form-year">year:</label></th>
+              <td>
+                <select name="year" id="form-year">
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <th><label for="color">color: </label></th>
+              <td id="color"><input type="color" id="color" /></td>
+            </tr>
+
+            <tr>
+              <th><span>orientation:</span></th>
+              <td>
+                <input
+                  type="radio"
+                  id="landscape"
+                  name="orientation"
+                  checked
+                /><label for="landscape">landscape</label>
+                <input type="radio" id="portrait" name="orientation" /><label
+                  for="portrait"
+                  >portrait</label
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <th><span>font:</span></th>
+              <td>
+                <input type="radio" id="bitter" name="font" checked /><label
+                  for="bitter"
+                  >bitter</label
+                >
+                <input type="radio" id="serif" name="font" /><label for="serif"
+                  >serif</label
+                >
+                <input type="radio" id="sans-serif" name="font" /><label
+                  for="sans-serif"
+                  >sans serif</label
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <th><span>language:</span></th>
+              <td>
+                <input
+                  type="radio"
+                  id="english"
+                  name="language"
+                  checked
+                /><label for="english">english</label>
+                <input type="radio" id="czech" name="language" /><label
+                  for="czech"
+                  >czech</label
+                >
+                <input type="radio" id="dutch" name="language" /><label
+                  for="dutch"
+                  >dutch</label
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <th><label for="form-notes">extra space for notes:</label></th>
+              <td><input type="checkbox" id="form-notes" checked /></td>
+            </tr>
+          </table>
+
+          <button id="submit-button">Download your planner</button>
+        </form>
+        <section id="preview-container">
+          <section id="preview-grid-child">
+            <section id="preview" class="orientation-landscape">
+              <section id="date" class="changing-color">
+                <h3 id="name-of-month">January</h3>
+                <span id="name-of-year">2022</span>
+              </section>
+              <section id="days-of-week-container">
+                <span class="day-of-week"></span>
+                <span class="day-of-week"></span>
+                <span class="day-of-week"></span>
+                <span class="day-of-week"></span>
+                <span class="day-of-week"></span>
+                <span class="day-of-week"></span>
+                <span class="day-of-week"></span>
+              </section>
+              <section id="calendar" class="grid-container"></section>
+              <section id="notes" class="changing-color">Notes:</section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <aside id="gallery">
+      <h2>Get your inspiration</h2>
+      <!--černé pattern pozadí
+        fotky toho, jak můžeš planner využít - při kliknutí na širším
+        screenu ti to vyhodí obrázek do popředí - ať už landscape nebo portrait
+        galerie v gridu s aspect ratiem 1/1- 
+        nějakej hover effect (zvětšení?)-->
+      <section id="grid-parent">
+        <div class="img-grid">
+          <img
+            src="https://images.pexels.com/photos/10351666/pexels-photo-10351666.jpeg"
+            alt="planner for inspiration"
+          />
+        </div>
+        <div class="img-grid"><img src="" alt="planner for inspiration" /></div>
+        <div class="img-grid"><img src="" alt="planner for inspiration" /></div>
+        <div class="img-grid"><img src="" alt="planner for inspiration" /></div>
+        <div class="img-grid"><img src="" alt="planner for inspiration" /></div>
+      </section>
+    </aside>
+
+    <footer>
+      <!--bílé pattern pozadí-->
+      <p>
+        Coded by <a href="#" class="link-in-text">Hana Voříšková</a>. You can
+        check the code on <a href="#" class="link-in-text">GitHub</a>.
+      </p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

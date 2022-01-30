@@ -1,0 +1,101 @@
+:root {
+  --color-for-preview: black;
+}
+
+/*že by pak hodnoty byly jak pro stahování, a pro náhled by se jen udělalo "scale(.3) ? */
+
+#preview-grid-child {
+  background-color: purple;
+  display: grid;
+  align-items: center;
+}
+
+#preview {
+  background-color: green;
+  padding: 20px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  object-fit: cover;
+  font-size: 0.4rem;
+}
+
+#preview.orientation-landscape {
+  aspect-ratio: 1.4142 / 1; /*pro A4*/
+}
+
+#preview.orientation-portrait {
+  aspect-ratio: 1 / 1.4142;
+}
+
+#preview > * {
+  border: solid red 1px;
+}
+
+#preview h3 {
+  margin: 0;
+}
+
+#date {
+  flex: 0 0 5%;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+}
+
+#days-of-week-container {
+  flex: 0 0 5%;
+  text-transform: capitalize;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 1px;
+  color: white;
+}
+
+#days-of-week-container * {
+  background-color: var(--color-for-preview);
+  text-align: center;
+  font-size: 0.4rem;
+}
+/* .serif {
+  font-family: serif; 
+  // a nebo to setnout přes :root a --to změnit přes 
+  js jak u barvy
+}
+
+.sans-serif {
+  font-family: sans-serif;
+} */
+
+#calendar {
+  flex: 1 1 60%;
+}
+
+#notes {
+  flex: 0 0 20%;
+}
+
+.no-notes {
+  display: none;
+}
+
+.gray-numbers {
+  color: gray;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    7,
+    1fr
+  ); /*tím pádem nepotřebuju znát počet týdnů u měsíců*/
+}
+
+.grid-child {
+  border: solid black 1px;
+  padding: 5%;
+}
+
+.changing-color {
+  color: var(--color-for-preview);
+}
