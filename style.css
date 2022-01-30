@@ -1,13 +1,14 @@
 :root {
   --golden: #000;
   --pattern-size: 50%;
-  --pattern-white: url("./pattern-white-3.png");
+  --pattern-white: url("./pattern-white-3.png"); /*udělat drobnější pattern*/
   --pattern-black: url("./pattern-black-2.png");
 }
 
 /*parallax scrolling by šel i pomocí perspektivy, translateZ scale 
 + na parentu transform-style:preserve-3d; 
-ale nakonec mám řešení přes background-attachment: fixed; */
+ale nakonec mám řešení přes background-attachment: fixed; 
+- šlo i by fixed uvnitř fixed, tj. parallax uvnitř parallaxu */
 
 *,
 *::before,
@@ -137,12 +138,14 @@ main {
 
 #generator-form {
   flex: 0 1 50%;
+  background-color: rgba(255 255 255 / 0.9);
 }
 
 table {
   /* border: solid green 1px; */
   width: 100%;
-  -webkit-border-horizontal-spacing: 0px;
+  /* -webkit-border-horizontal-spacing: 0px; */
+  border-spacing: 0;
 }
 
 table tr:nth-child(odd) {
@@ -173,6 +176,7 @@ table th {
 #generator-form input[type="color"] {
   width: 100%;
   text-align: center;
+  height: 2rem;
 }
 
 #generator-form input[type="color"] {
@@ -180,6 +184,17 @@ table th {
   width: 100%;
   padding: 0;
   margin: 0;
+  display: flex;
+}
+
+#generator-form input[type="color" i] {
+  padding: 0;
+  flex: 1 1 auto;
+}
+
+::-webkit-color-swatch-wrapper {
+  /*jinak je tam padding kolem barvy*/
+  padding: 0;
 }
 
 /* 
