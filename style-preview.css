@@ -56,8 +56,9 @@
 
 #days-of-week-container * {
   background-color: var(--color-for-preview);
-  text-align: center;
   font-size: 0.4rem;
+  display: grid;
+  place-items: center;
 }
 /* .serif {
   font-family: serif; 
@@ -71,6 +72,22 @@
 
 #calendar {
   flex: 1 1 60%;
+  position: relative;
+}
+
+#calendar::after {
+  /*- na zakrytí vnější border u jednotlivých dnů*/
+  position: absolute;
+  content: "";
+  width: 101%;
+  height: 101%;
+  top: -0.5%;
+  left: -0.5%;
+  border: 5px white solid;
+}
+
+#preview.orientation-portrait #calendar::after {
+  border: 4px white solid;
 }
 
 #notes {
