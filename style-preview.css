@@ -5,19 +5,20 @@
 /*že by pak hodnoty byly jak pro stahování, a pro náhled by se jen udělalo "scale(.3) ? */
 
 #preview-grid-child {
-  background-color: purple;
+  background-color: rgba(200 200 200 / 0.2);
   display: grid;
   align-items: center;
 }
 
 #preview {
-  background-color: green;
+  background-color: white;
   padding: 20px;
   color: black;
   display: flex;
   flex-direction: column;
   object-fit: cover;
   font-size: 0.4rem;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
 }
 
 #preview.orientation-landscape {
@@ -41,6 +42,7 @@
   text-transform: uppercase;
   display: flex;
   justify-content: space-between;
+  padding: 1%;
 }
 
 #days-of-week-container {
@@ -73,6 +75,9 @@
 
 #notes {
   flex: 0 0 20%;
+  border: solid var(--color-for-preview) 1px;
+  margin-top: 2%;
+  padding: 1%;
 }
 
 .no-notes {
@@ -92,7 +97,7 @@
 }
 
 .grid-child {
-  border: solid black 1px;
+  border: solid var(--color-for-preview) 0.2px;
   padding: 5%;
 }
 

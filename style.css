@@ -89,6 +89,7 @@ h1 a {
 h1 a {
   background-color: transparent;
   color: gold;
+  text-shadow: 2px 2px 2px black, 0px 0px 2px black;
 }
 nav li a:hover {
   background-color: transparent;
@@ -231,7 +232,7 @@ input[type="radio"]:nth-of-type(3) {
 
 #preview-container {
   flex: 0 0 45%;
-  background-color: red; /**/
+  background-color: rgba(50 50 50 / 0.2); /**/
   display: grid;
   place-items: center;
 }
