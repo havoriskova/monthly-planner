@@ -72,6 +72,24 @@ if (media.matches){
 
 const calendar = document.getElementById("calendar");
 const [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12] = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+const formYear = document.getElementById("form-year");
+
+
+function changeYear(e) {
+    console.log(formYear.getElementsByTagName("option")[0].value); // mi dá rok podle indexu
+    console.log("selected!");
+    console.log(e.target.value);
+    let selectedYear = e.target.value;
+    console.log(selectedYear); // mi dá číslo roku, který můžu poslat do funkce useData??
+    // rovnou udělat OOP objekt pro form pro větší přehlednost? Funkce changeYear, do
+    // která by přijímala parametry pro rok a json - tj. jen změnit funkci useData ??
+
+}
+
+formYear.addEventListener("input", changeYear);
+
+
+
 
 fetch("http://127.0.0.1:8887/years.json")
 .then(response => {
@@ -79,7 +97,8 @@ fetch("http://127.0.0.1:8887/years.json")
 })
 .then(jsondata => useData(jsondata));
 
-function useData(years) {
+
+function useData(years) { // navíc parametr pro rok !! + když není parametr přidán, jaké je defaultní chování??
     console.log(years);
     // console.log(`${years[2022]}.${m1}[1]`); NOT WORKING
     // console.log(m1); 

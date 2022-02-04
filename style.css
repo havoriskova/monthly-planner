@@ -1,8 +1,8 @@
 :root {
-  --golden: #000;
+  --golden: rgb(241, 224, 224);
   --pattern-size: 50%;
-  --pattern-white: url("./pattern-white-3.png"); /*udělat drobnější pattern*/
-  --pattern-black: url("./pattern-black-2.png");
+  --pattern-white: url("./pattern-white-5.png"); /*udělat drobnější pattern*/
+  --pattern-black: url("./pattern-black-4.png");
 }
 
 /*parallax scrolling by šel i pomocí perspektivy, translateZ scale 
@@ -128,6 +128,14 @@ main {
   padding-bottom: 100px; /*kvůli tlačítku na form*/
 }
 
+.mask {
+  background: radial-gradient(
+    rgba(255 255 255 / 0.9),
+    rgba(255 255 255 / 0.9),
+    rgba(255 255 255 / 0)
+  ); /*udělat radial gradient, kdy do krajů by bylo méně transparentnosti - nebyl by to tak tvrdej přechod*/
+}
+
 #generator-section {
   /*nemůže být relative kvůli tlačítku*/
   display: flex;
@@ -138,7 +146,6 @@ main {
 
 #generator-form {
   flex: 0 1 50%;
-  background-color: rgba(255 255 255 / 0.9);
 }
 
 table {
@@ -283,6 +290,10 @@ footer {
   text-decoration: none;
   color: black;
   font-weight: 600;
+}
+
+#about .link-in-text {
+  color: gold;
 }
 
 .link-in-text:hover {
