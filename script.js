@@ -74,40 +74,46 @@ const calendar = document.getElementById("calendar");
 const [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12] = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 const formYear = document.getElementById("form-year");
 
+let selectedYear = 2022; // defaultně
 
 function changeYear(e) {
     console.log(formYear.getElementsByTagName("option")[0].value); // mi dá rok podle indexu
     console.log("selected!");
     console.log(e.target.value);
-    let selectedYear = e.target.value;
+    selectedYear = parseInt(e.target.value);
     console.log(selectedYear); // mi dá číslo roku, který můžu poslat do funkce useData??
     // rovnou udělat OOP objekt pro form pro větší přehlednost? Funkce changeYear, do
     // která by přijímala parametry pro rok a json - tj. jen změnit funkci useData ??
-
+    fetching(false);
 }
 
 formYear.addEventListener("input", changeYear);
 
 
-
+function fetching(isItFirstTime) {
 
 fetch("http://127.0.0.1:8887/years.json")
 .then(response => {
     return response.json();
 })
-.then(jsondata => useData(jsondata));
+.then(jsondata => useData(jsondata, isItFirstTime));
+}
 
+fetching(true);
 
-function useData(years) { // navíc parametr pro rok !! + když není parametr přidán, jaké je defaultní chování??
+function useData(years, isItFirstTime) { // navíc parametr pro rok !! + když není parametr přidán, jaké je defaultní chování??
     console.log(years);
     // console.log(`${years[2022]}.${m1}[1]`); NOT WORKING
     // console.log(m1); 
+    console.log(isItFirstTime);
 
 
 // let weeks = years[2022].january[0]; - díky gridu nepotřebuju
-let daysBefore = years[2022].january[1];
-let days = years[2022].january[2];
-let daysAfter = years[2022].january[3];
+let daysBefore = years[`${selectedYear}`].january[1];
+let days = years[`${selectedYear}`].january[2];
+let daysAfter = years[`${selectedYear}`].january[3];
+
+if (!isItFirstTime) {calendar.innerHTML= ``;}
 
     for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
         generateNumbers(i, true);
@@ -120,10 +126,11 @@ let daysAfter = years[2022].january[3];
     for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
       generateNumbers(i, true);
     }
-
 }
 
+
 function generateNumbers (i, isGray){
+    
     let day = document.createElement("span");
         day.innerHTML = i;
         calendar.appendChild(day);
@@ -134,6 +141,8 @@ function generateNumbers (i, isGray){
     } else if(!isGray) {
         day.classList.add("changing-color");
         }
+   
+
 }
 
 // ---------------- konec JSON
