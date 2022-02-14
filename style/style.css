@@ -1,6 +1,6 @@
 :root {
   --golden: rgb(241, 224, 224);
-  --pattern-size: 50%;
+  --pattern-size: 10%;
   --pattern-white: url("./img/pattern-white-5.png");
   --pattern-black: url("./img/pattern-black-4.png");
 }
