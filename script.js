@@ -1,3 +1,4 @@
+
 // ---------------- navigace
 
 const navIcon = document.getElementById("menu-icon");
@@ -92,7 +93,7 @@ formYear.addEventListener("input", changeYear);
 
 function fetching(isItFirstTime) {
 
-fetch("http://127.0.0.1:8887/years.json")
+fetch("http://localhost:3000/years.json")   // http://127.0.0.1:8887/years.json takhle to bylo za použítí "200 ok"
 .then(response => {
     return response.json();
 })
@@ -137,6 +138,7 @@ function generateNumbers (i, isGray){
         day.classList.add("grid-child");
 
         if(isGray){
+            debugger;
         day.classList.add("gray-numbers");
     } else if(!isGray) {
         day.classList.add("changing-color");
