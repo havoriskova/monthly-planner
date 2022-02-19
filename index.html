@@ -101,9 +101,10 @@
                     id="landscape"
                     name="orientation"
                     checked
-                  /><label for="landscape">landscape</label>
+                  /><label for="landscape" class="radio-label">landscape</label>
                   <input type="radio" id="portrait" name="orientation" /><label
                     for="portrait"
+                    class="radio-label"
                     >portrait</label
                   >
                 </td>
@@ -111,17 +112,20 @@
 
               <tr>
                 <th><span>font:</span></th>
-                <td>
+                <td class="td-font">
                   <input type="radio" id="bitter" name="font" checked /><label
                     for="bitter"
+                    class="radio-label"
                     >bitter</label
                   >
                   <input type="radio" id="serif" name="font" /><label
                     for="serif"
+                    class="radio-label"
                     >serif</label
                   >
                   <input type="radio" id="sans-serif" name="font" /><label
                     for="sans-serif"
+                    class="radio-label"
                     >sans serif</label
                   >
                 </td>
@@ -135,13 +139,15 @@
                     id="english"
                     name="language"
                     checked
-                  /><label for="english">english</label>
+                  /><label for="english" class="radio-label">english</label>
                   <input type="radio" id="czech" name="language" /><label
                     for="czech"
+                    class="radio-label"
                     >czech</label
                   >
                   <input type="radio" id="dutch" name="language" /><label
                     for="dutch"
+                    class="radio-label"
                     >dutch</label
                   >
                 </td>
@@ -149,7 +155,13 @@
 
               <tr>
                 <th><label for="form-notes">extra space for notes:</label></th>
-                <td><input type="checkbox" id="form-notes" checked /></td>
+                <td>
+                  <label for="form-notes"
+                    ><input type="checkbox" id="form-notes" checked /><span
+                      class="polygon"
+                    ></span
+                  ></label>
+                </td>
               </tr>
             </table>
 
