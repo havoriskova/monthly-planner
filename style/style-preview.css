@@ -4,6 +4,14 @@
 
 /*že by pak hodnoty byly jak pro stahování, a pro náhled by se jen udělalo "scale(.3) ? */
 
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #preview-grid-child {
   background-color: rgba(200 200 200 / 0.2);
   display: grid;

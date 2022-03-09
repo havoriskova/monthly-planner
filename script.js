@@ -14,6 +14,10 @@ navIcon.addEventListener("click", respNav);
 
 // --------------- konec navigace
 
+//------navigace s eventem na scroll nahoru - že se zobrazí fixed ?
+
+// --------------- konec navigace scroll fixed
+
 // ---------------- text-change - innerHTML "on the left" -> "down below" od 900px 
 
 // + přes event se text mění až při ZMĚNĚ šířky - proto 
@@ -21,43 +25,63 @@ navIcon.addEventListener("click", respNav);
 // ZÁROVEŇ nastavení výšky 100vh na main - pokud se viewport změní, už na tu výšku nebude mít vliv
 
 const textChange = document.getElementById("text-change");
-const main = document.querySelector("main");
+// const main = document.querySelector("main");
 let media = window.matchMedia(`(max-width:900px)`);
 
 function changeText(e) {
 if (e.matches){
-    textChange.innerHTML = "down below";
-    main.style.height = `auto`;
-} else {
-textChange.innerHTML = "on the left side";
- if (window.innerHeight > 700) {
-    main.style.height=`${window.innerHeight}px`;
-    console.log(window.innerHeight);
-    } else {
-    main.style.height = `700px`;
-}}
+     textChange.innerHTML = "down below";
+  //   main.style.height = `auto`;
+ } else {
+ textChange.innerHTML = "on the left side";
+//  if (window.innerHeight > 700) {
+//     main.style.height=`${window.innerHeight}px`;
+//     console.log(window.innerHeight);
+//     } else {
+//     main.style.height = `700px`;
+ }}
 
-console.log("funguje to!");
-}
+// console.log("funguje to!");
+// }
 
 media.addEventListener("change", changeText);
 
-if (media.matches){
-    textChange.innerHTML = "down below";
-    main.style.height = `auto`;
+ if (media.matches){
+ textChange.innerHTML = "down below";
+//     main.style.height = `auto`;
     
-} else {
-    if (window.innerHeight > 700) {
-    main.style.height=`${window.innerHeight}px`;
-    console.log(window.innerHeight);
-    } else {
-    main.style.height = `700px`;
-}
-}
+// } else {
+//     if (window.innerHeight > 700) {
+//     main.style.height=`${window.innerHeight}px`;
+//     console.log(window.innerHeight);
+//     } else {
+//     main.style.height = `700px`;
+// }
+ }
 
 //media.addEventListener("change", ({media, matches}) => console.log(media,matches));
 
 // ---------------- konec text-change
+
+// výška sekce na available výšku:
+
+function changeWidth() {
+
+const main = document.querySelector("main");
+
+let myHeight = window.screen.availHeight;
+
+if(window.innerWidth > 900) {
+main.style.height= `${myHeight-110}px`;
+console.log(myHeight);
+} else {
+    main.style.height= "min-content";
+}
+}
+
+window.addEventListener("resize", changeWidth);
+
+changeWidth();
 // ---------------- konec nastavení výšky
 
 
@@ -74,6 +98,7 @@ if (media.matches){
 const calendar = document.getElementById("calendar");
 const [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12] = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 const formYear = document.getElementById("form-year");
+let previewYear = document.getElementById("name-of-year");
 
 let selectedYear = 2022; // defaultně
 
@@ -85,6 +110,7 @@ function changeYear(e) {
     console.log(selectedYear); // mi dá číslo roku, který můžu poslat do funkce useData??
     // rovnou udělat OOP objekt pro form pro větší přehlednost? Funkce changeYear, do
     // která by přijímala parametry pro rok a json - tj. jen změnit funkci useData ??
+    previewYear.innerText = selectedYear;
     fetching(false);
 }
 
@@ -138,7 +164,7 @@ function generateNumbers (i, isGray){
         day.classList.add("grid-child");
 
         if(isGray){
-            debugger;
+            // debugger;
         day.classList.add("gray-numbers");
     } else if(!isGray) {
         day.classList.add("changing-color");
@@ -255,25 +281,26 @@ formLanguages.forEach(formLang => formLang.addEventListener("input", changeLangu
 
 // ---------------- FORM orientation - toggle .orientation-portrait
 let orientationForm = document.querySelectorAll(`input[name="orientation"]`);
+const previewOrientation = document.querySelector("#preview-orientation");
 
 function changeOrientation() {
-preview.classList.toggle("orientation-landscape");    
-preview.classList.toggle("orientation-portrait");
+previewOrientation.classList.toggle("orientation-landscape");    
+previewOrientation.classList.toggle("orientation-portrait");
 
-if(preview.classList.contains("orientation-landscape")) {
-    document.getElementById("preview-container").style.placeItems = "stretch";
-} else {
-    document.getElementById("preview-container").style.placeItems = "center";
-}
+// if(preview.classList.contains("orientation-landscape")) {
+//     document.getElementById("preview-container").style.placeItems = "stretch";
+// } else {
+//     document.getElementById("preview-container").style.placeItems = "center";
+// }
 }
 
 orientationForm.forEach(orient => orient.addEventListener("input", changeOrientation));
 
-if(preview.classList.contains("orientation-landscape")) {
-    document.getElementById("preview-container").style.placeItems = "stretch";
-} else {
-    document.getElementById("preview-container").style.placeItems = "center";
-}
+// if(preview.classList.contains("orientation-landscape")) {
+//     document.getElementById("preview-container").style.placeItems = "stretch";
+// } else {
+//     document.getElementById("preview-container").style.placeItems = "center";
+// }
 
 
 // ---------------- konec orientation

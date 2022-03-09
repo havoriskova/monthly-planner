@@ -3,6 +3,7 @@
   --pattern-size: 10%;
   --pattern-white: url("./img/pattern-white-5.png");
   --pattern-black: url("./img/pattern-black-4.png");
+  --color-for-preview: black;
 }
 
 /*parallax scrolling by šel i pomocí perspektivy, translateZ scale 
@@ -13,6 +14,8 @@ ale nakonec mám řešení přes background-attachment: fixed;
 *,
 *::before,
 *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -41,9 +44,9 @@ header {
   justify-content: space-between;
 }
 
-header * {
+/* header * {
   border: red solid 1px;
-}
+} */
 
 h1 {
   text-transform: capitalize;
@@ -98,11 +101,12 @@ nav li a:hover {
 
 aside,
 main {
-  padding: 1rem 3rem 1rem;
+  padding: 1rem 5rem 3rem;
 }
 
 h2 {
   font-family: "Special Elite", cursive;
+  padding: 1rem 0;
 }
 
 #about {
@@ -110,7 +114,7 @@ h2 {
   background-size: var(--pattern-size);
   background-repeat: repeat;
   background-attachment: fixed;
-  padding-top: 5rem; /*kvůli  navigaci, aby při hoveru šlo vidět 
+  padding-top: 6rem; /*kvůli  navigaci, aby při hoveru šlo vidět 
   jednolité pozadí*/
   text-align: justify;
   color: gold;
@@ -130,11 +134,21 @@ main {
 }
 
 .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 3rem);
   background: radial-gradient(
     rgba(255 255 255 / 0.9),
     rgba(255 255 255 / 0.9),
     rgba(255 255 255 / 0)
-  ); /*udělat radial gradient, kdy do krajů by bylo méně transparentnosti - nebyl by to tak tvrdej přechod*/
+  );
+} /*udělat radial gradient, kdy do krajů by bylo méně transparentnosti - nebyl by to tak tvrdej přechod*/
+
+.mask ~ h2 {
+  z-index: 2;
+  position: relative;
 }
 
 #generator-section {
@@ -142,11 +156,17 @@ main {
   display: flex;
   justify-content: space-between;
   height: 75%;
-  border: solid green 1px;
+  z-index: 2;
+  position: relative; /*bez tohohle by nefungoval z-index*/
+  /* border: solid green 1px; */
 }
 
 #generator-form {
   flex: 0 1 50%;
+}
+
+#generator-form p {
+  padding: 1rem 0;
 }
 
 table {
@@ -203,7 +223,6 @@ table tr:nth-of-type(6) input {
   background-color: transparent;
   width: 100%;
   padding: 0;
-  margin: 0;
   display: flex;
 }
 
@@ -227,6 +246,11 @@ input[type="radio"]:nth-of-type(3) {
 /*radio*/
 input[type="radio"] {
   opacity: 0;
+  margin: 0 5px;
+}
+
+input[type="radio"]:nth-of-type(1) {
+  margin-left: 0;
 }
 
 label.radio-label {
@@ -258,7 +282,9 @@ input[type="radio"]:checked + label.radio-label::before {
 /*konec radio*/
 
 /*checkbox*/
-#form-notes {
+
+input[type="checkbox"] {
+  position: absolute;
   /*lepší design - zakrýt actual checkbox input, a pak ukázat
   empty checkbox a checked checkbox*/
   opacity: 0; /*zakrytí původního*/
@@ -268,8 +294,8 @@ input[type="radio"]:checked + label.radio-label::before {
 
 .polygon::before {
   position: absolute;
-  left: 0.9rem;
-  top: 1rem;
+  /* left: 0.9rem;
+  top: 1rem; */
   content: "";
   border: 3px solid gold;
   border-radius: 0.2rem;
@@ -282,15 +308,20 @@ input[type="radio"]:checked + label.radio-label::before {
   background-color: gold;
 }
 
-td {
+.td-polygon {
   /*kvůli polygonu*/
+  position: relative;
+  display: flex;
+}
+
+span.polygon {
   position: relative;
 }
 
 #form-notes:checked ~ .polygon::after {
   position: absolute;
-  left: 1rem;
-  top: 1.1rem;
+  left: 0.1rem;
+  top: 0.1rem;
   width: 0.9rem;
   height: 0.9rem;
   content: "";
@@ -300,12 +331,16 @@ td {
 /*konec checkboxu*/
 
 #submit-button {
-  position: absolute;
+  position: relative;
+  z-index: 5;
   background-color: lightgreen; /**/
   color: white;
-  bottom: 40px;
+  /* bottom: 40px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
+  display: block;
+  margin: 0 auto;
+  bottom: -90px;
   padding: 10px 40px;
   font-family: "Bitter", serif;
   border: none;
@@ -319,9 +354,158 @@ td {
 
 #preview-container {
   flex: 0 0 45%;
-  background-color: rgba(50 50 50 / 0.2); /**/
+  /* background-color: rgba(50 50 50 / 0.2);  */
+  position: relative;
+}
+/**/
+
+/* #preview-grid-child {
+  background-color: rgba(200 200 200 / 0.2);
+  display: grid;
+  align-items: center;
+} */
+
+#preview-orientation {
+  /* background-color: rgba(200 200 200 / 0.2); */
+  position: relative;
+  margin: 0 auto; /*pozici absolute dát nemůžu, protože na výšce previewu je závislá výška celého main*/
+}
+
+#preview-orientation.orientation-landscape {
+  width: 90%; /*nechceš přes celou šířku - pak se to snaží s celou šířkou dodržet aspect-ratio, a přesahuje svůj parent element + změnit u media*/
+  height: auto;
+  aspect-ratio: 1.4142 / 1; /*pro A4*/
+}
+
+#preview-orientation.orientation-portrait {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 1.4142;
+}
+
+#preview {
+  background-color: white;
+  padding: 20px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  object-fit: cover;
+  font-size: 0.4rem;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
+  width: 100%;
+  height: 100%;
+}
+
+/* 
+#preview {
+  background-color: white;
+  padding: 20px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  object-fit: cover;
+  font-size: 0.4rem;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
+}
+
+#preview.orientation-landscape {
+  aspect-ratio: 1.4142 / 1; /*pro A4*/
+
+/*
+#preview.orientation-portrait {
+  aspect-ratio: 1 / 1.4142; */
+/* 
+#preview > * {
+  border: solid red 1px;
+} */
+
+#preview h3 {
+  margin: 0;
+}
+
+#date {
+  flex: 0 0 5%;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  padding: 1%;
+}
+
+#days-of-week-container {
+  flex: 0 0 5%;
+  text-transform: capitalize;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 1px;
+  color: white;
+}
+
+#days-of-week-container * {
+  background-color: var(--color-for-preview);
+  font-size: 0.4rem;
   display: grid;
   place-items: center;
+}
+/* .serif {
+  font-family: serif; 
+  // a nebo to setnout přes :root a --to změnit přes 
+  js jak u barvy
+}
+
+.sans-serif {
+  font-family: sans-serif;
+} */
+
+#calendar {
+  flex: 1 1 60%;
+  position: relative;
+}
+
+#calendar::after {
+  /*- na zakrytí vnější border u jednotlivých dnů*/
+  position: absolute;
+  content: "";
+  width: 101%;
+  height: 101%;
+  top: -0.5%;
+  left: -0.5%;
+  border: 5px white solid;
+}
+
+#preview.orientation-portrait #calendar::after {
+  border: 4px white solid;
+}
+
+#notes {
+  flex: 0 0 20%;
+  border: solid var(--color-for-preview) 1px;
+  margin-top: 2%;
+  padding: 1%;
+}
+
+.no-notes {
+  display: none;
+}
+
+.gray-numbers {
+  color: gray;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    7,
+    1fr
+  ); /*tím pádem nepotřebuju znát počet týdnů u měsíců*/
+}
+
+.grid-child {
+  border: solid var(--color-for-preview) 0.2px;
+  padding: 5%;
+}
+
+.changing-color {
+  color: var(--color-for-preview);
 }
 
 /**/
@@ -372,6 +556,7 @@ footer {
   right: 0;
   text-align: center;
   height: 3rem;
+  padding-top: 1rem;
 }
 
 .link-in-text {
@@ -395,6 +580,9 @@ footer {
   main {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  #preview-orientation.orientation-landscape {
+    width: 100%;
   }
 }
 
@@ -474,11 +662,15 @@ footer {
   }
 
   main {
-    height: auto;
+    height: min-content; /*tohle je už javascriptem, ne*/
   }
 
   #generator-section {
-    flex-direction: column;
+    display: block; /*zrušení flexboxu*/
+  }
+
+  #submit-button {
+    bottom: -50px;
   }
 
   #text-change {
@@ -493,7 +685,25 @@ footer {
     place-items: stretch;
   } */
 
+  #preview-orientation.orientation-landscape {
+    width: 80%;
+  }
+
+  #preview-orientation.orientation-portrait {
+    width: 50%;
+  }
+
   .img-grid img {
     cursor: inherit;
+  }
+}
+
+@media (max-width: 650px) {
+  #preview-orientation.orientation-landscape {
+    width: 100%;
+  }
+
+  #preview-orientation.orientation-portrait {
+    width: 80%;
   }
 }
