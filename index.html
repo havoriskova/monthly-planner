@@ -68,7 +68,7 @@
         pod vším pak vycentrované tlačítko na stáhnutí (napojené na js)-->
       <section id="generator-section">
         <!--kvůli tlačítku je v main další element-->
-        <form id="generator-form" action="">
+        <form id="generator-form">
           <p>
             Fill this form according to your preference -
             <span id="text-change">on the left side</span> you can see a preview
@@ -89,7 +89,9 @@
 
             <tr>
               <th><label for="color">color: </label></th>
-              <td id="color"><input type="color" id="color" /></td>
+              <td id="color">
+                <input type="color" name="color" id="color" />
+              </td>
             </tr>
 
             <tr>

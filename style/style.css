@@ -542,6 +542,9 @@ span.polygon {
   filter: grayscale(50%);
   object-fit: none; /*po optimalizaci fotek by tohle mohlo jít, 
   prostě by to šlo do své originální šířky*/
+  /*+ při rozkliknutí by byl obrázek v popředí přes větší část obrazovky,
+  a pozadí blured - přes JS a toggle class .active-img 
+  - ale nefunguje pro telefony! */
 }
 
 footer {
@@ -692,10 +695,6 @@ footer {
   #preview-orientation.orientation-portrait {
     width: 50%;
   }
-
-  .img-grid img {
-    cursor: inherit;
-  }
 }
 
 @media (max-width: 650px) {
@@ -705,5 +704,13 @@ footer {
 
   #preview-orientation.orientation-portrait {
     width: 80%;
+  }
+}
+
+@media (max-width: 560px) {
+  .img-grid img:hover {
+    cursor: inherit;
+    filter: none;
+    object-fit: cover;
   }
 }

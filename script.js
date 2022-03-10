@@ -313,3 +313,22 @@ function setDefaultForm() {
 
 setDefaultForm();
 // ---------------- konec nastavení defaultu 
+
+
+// samotné generování pomocí submitu form
+// http://localhost:3000/?year=2023&color=%23ffffff&orientation=landscape&font=sans-serif&language=czech&form-notes=on
+// http://localhost:3000/?year=2024&color=%23000000&orientation=portrait&font=serif&language=czech
+
+
+const generatorForm = document.getElementById("generator-form");
+
+function handleSubmit(e) {
+    e.preventDefault();
+    console.log("nj");
+    console.log(e);
+    console.log(e.srcElement.action); // takhle se dostanu k adrese
+}
+
+
+
+generatorForm.addEventListener("submit", handleSubmit);
