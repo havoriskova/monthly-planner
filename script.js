@@ -121,7 +121,7 @@ formYear.addEventListener("input", changeYear);
 
 function fetching(isItFirstTime) {
 
-fetch("https://hungry-mirzakhani-0f7c44.netlify.app/")   // http://127.0.0.1:8887/years.json takhle to bylo za použítí "200 ok"
+fetch("https://hungry-mirzakhani-0f7c44.netlify.app/years.json")   // http://127.0.0.1:8887/years.json takhle to bylo za použítí "200 ok"
 // http://127.0.0.1:5500/years.json je to za použití live serveru, co mi vytvoří port 5500 - extention pro VS code, co po každém uložení udělá
 // změnu bez nutnosti aktualizovat server
 // za použití mého serveru vygenerovaného v app.js je to http://localhost:3000/years.json 
