@@ -1,8 +1,6 @@
 
 // ---------------- navigace
 
-
-
 const navIcon = document.getElementById("menu-icon");
 
 function respNav () {
@@ -22,46 +20,24 @@ navIcon.addEventListener("click", respNav);
 
 // ---------------- text-change - innerHTML "on the left" -> "down below" od 900px 
 
-// + přes event se text mění až při ZMĚNĚ šířky - proto 
-//ještě if statement mimo funkci
-// ZÁROVEŇ nastavení výšky 100vh na main - pokud se viewport změní, už na tu výšku nebude mít vliv
-
 const textChange = document.getElementById("text-change");
-// const main = document.querySelector("main");
+
 let media = window.matchMedia(`(max-width:900px)`);
 
 function changeText(e) {
 if (e.matches){
      textChange.innerHTML = "down below";
-  //   main.style.height = `auto`;
  } else {
  textChange.innerHTML = "on the left side";
-//  if (window.innerHeight > 700) {
-//     main.style.height=`${window.innerHeight}px`;
-//     console.log(window.innerHeight);
-//     } else {
-//     main.style.height = `700px`;
- }}
 
-// console.log("funguje to!");
-// }
+ }
+}
 
 media.addEventListener("change", changeText);
 
- if (media.matches){
+ if (media.matches){ // initial call
  textChange.innerHTML = "down below";
-//     main.style.height = `auto`;
-    
-// } else {
-//     if (window.innerHeight > 700) {
-//     main.style.height=`${window.innerHeight}px`;
-//     console.log(window.innerHeight);
-//     } else {
-//     main.style.height = `700px`;
-// }
  }
-
-//media.addEventListener("change", ({media, matches}) => console.log(media,matches));
 
 // ---------------- konec text-change
 
@@ -75,7 +51,6 @@ let myHeight = window.screen.availHeight;
 
 if(window.innerWidth > 900) {
 main.style.height= `${myHeight-110}px`;
-//console.log(myHeight);
 } else {
     main.style.height= "min-content";
 }
@@ -87,15 +62,7 @@ changeWidth();
 // ---------------- konec nastavení výšky
 
 
-
-
-// ---------------- JSON - díky chrom extension "Web server for chrome" mám lokální server, na kterém je i lokální json soubor, a díky tomu ho můžu využít 
-// - bez serveru bych lokální .json soubor nemohla použít (musela bych data mít v .js souboru)
-
-// JSON.parse(years); - JSON string to object
-// JSON.stringify(něco) - z klasického js objektu/array udělá JSON string
-
-// vygenerovat kalendář přímo v js - kvůli počtu řádků
+// ---------------- JSON - vygenerovat kalendář přímo v js kvůli počtu řádků
 
 const calendar = document.getElementById("calendar");
 const [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12] = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
@@ -105,43 +72,27 @@ let previewYear = document.getElementById("name-of-year");
 let selectedYear = 2022; // defaultně
 
 function changeYear(e) {
- //   console.log(formYear.getElementsByTagName("option")[0].value); // mi dá rok podle indexu
-   // console.log("selected!");
-    //console.log(e.target.value);
+ 
     selectedYear = parseInt(e.target.value);
-    //console.log(selectedYear); // mi dá číslo roku, který můžu poslat do funkce useData??
-    // rovnou udělat OOP objekt pro form pro větší přehlednost? Funkce changeYear, do
-    // která by přijímala parametry pro rok a json - tj. jen změnit funkci useData ??
     previewYear.innerText = selectedYear;
     fetching(false);
 }
 
 formYear.addEventListener("input", changeYear);
 
-
 function fetching(isItFirstTime) {
-
-fetch("https://hungry-mirzakhani-0f7c44.netlify.app/years.json")   // http://127.0.0.1:8887/years.json takhle to bylo za použítí "200 ok"
-// http://127.0.0.1:5500/years.json je to za použití live serveru, co mi vytvoří port 5500 - extention pro VS code, co po každém uložení udělá
-// změnu bez nutnosti aktualizovat server
-// za použití mého serveru vygenerovaného v app.js je to http://localhost:3000/years.json 
-// za použití netlify zadara domény je to https://hungry-mirzakhani-0f7c44.netlify.app/
+fetch("http://localhost:3000/years.json") // app.js  http://localhost:3000/years.json 
+// netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json
 .then(response => {
     return response.json();
 })
 .then(jsondata => useData(jsondata, isItFirstTime));
 }
 
-fetching(true);
+fetching(true); //initial call
 
-function useData(years, isItFirstTime) { // navíc parametr pro rok !! + když není parametr přidán, jaké je defaultní chování??
-  //  console.log(years);
-    // console.log(`${years[2022]}.${m1}[1]`); NOT WORKING
-    // console.log(m1); 
-  //  console.log(isItFirstTime);
+function useData(years, isItFirstTime) {
 
-
-// let weeks = years[2022].january[0]; - díky gridu nepotřebuju
 let daysBefore = years[`${selectedYear}`].january[1];
 let days = years[`${selectedYear}`].january[2];
 let daysAfter = years[`${selectedYear}`].january[3];
@@ -170,7 +121,6 @@ function generateNumbers (i, isGray){
         day.classList.add("grid-child");
 
         if(isGray){
-            // debugger;
         day.classList.add("gray-numbers");
     } else if(!isGray) {
         day.classList.add("changing-color");
@@ -227,16 +177,9 @@ formFonts.forEach(font => font.addEventListener("input", changeFont));
 // ---------------- FORM - color BOOOM
 
 const color = document.getElementById("color");
-// let elChangingColor = document.querySelectorAll(".changing-color");
 const root = document.querySelector(":root");
 
 function changeColor(e) {
- //   console.log(e.target.value);
-    // console.log(elChangingColor);
-
-    // elChangingColor.forEach(el => el.style.color = e.target.value);
-   // var rootStyles = getComputedStyle(root);
-    //var color = rootStyles.getPropertyValue('--color-for-preview');
     root.style.setProperty(`--color-for-preview`, e.target.value);
 }
 
@@ -292,22 +235,9 @@ const previewOrientation = document.querySelector("#preview-orientation");
 function changeOrientation() {
 previewOrientation.classList.toggle("orientation-landscape");    
 previewOrientation.classList.toggle("orientation-portrait");
-
-// if(preview.classList.contains("orientation-landscape")) {
-//     document.getElementById("preview-container").style.placeItems = "stretch";
-// } else {
-//     document.getElementById("preview-container").style.placeItems = "center";
-// }
 }
 
 orientationForm.forEach(orient => orient.addEventListener("input", changeOrientation));
-
-// if(preview.classList.contains("orientation-landscape")) {
-//     document.getElementById("preview-container").style.placeItems = "stretch";
-// } else {
-//     document.getElementById("preview-container").style.placeItems = "center";
-// }
-
 
 // ---------------- konec orientation
 
@@ -321,35 +251,50 @@ setDefaultForm();
 // ---------------- konec nastavení defaultu 
 
 
-// samotné generování pomocí submitu form - pokud mám method GET:
-// http://localhost:3000/?year=2023&color=%23ffffff&orientation=landscape&font=sans-serif&language=czech&form-notes=on
-// http://localhost:3000/?year=2024&color=%23000000&orientation=portrait&font=serif&language=czech
-
-// pokud mám method POST, tak se posílá STRING ve stejném tvaru, jak u get, tj.:
-// year=2023&color=%23ffffff&orientation=landscape&font=sans-serif&language=czech&form-notes=on
-
 const generatorForm = document.getElementById("generator-form");
 
 function handleSubmit(e) {
  e.preventDefault();
  console.log("tadá event objekt" ,  e);
- //console.log(e.srcElement.action); // takhle se NEdostanu k adrese
 
 const formEntries = new FormData(generatorForm).entries();
 const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
 // console.log(new FormData(generatorForm)); // objekt, prototyp FormData
 // console.log(formEntries); // objekt, prototype Interator
 // console.log(Array.from(formEntries));
-console.log(json); // objekt, prototype Object
-console.log(json.color);
-console.log(Object.keys(json).length); // když === 5, tak to znamená, že není Notes
+console.log("json", json); // objekt, prototype Object
 
-
-
-
-// tady zpracuju info, a rovnou vyvolám novou funkci, do které jako parametr hodím 
-// objekt s infem, která mi vygeneruje a dá ke stáhnutí ten planner 
+generatePlanner(json);
 }
 
 generatorForm.addEventListener("submit", handleSubmit);
 
+
+
+function generatePlanner(json) {
+
+console.log(json.color);
+console.log(Object.keys(json).length); // když 5, tak to znamená, že není Notes // underfined v class OOP
+
+
+    class Planner { // na pořadí u constructoru záleží
+        constructor(year, color, orientation, font, language, notes) {
+            this.year = year;
+            this.color = color;
+            this.orientation = orientation;
+            this.font = font;
+            this.language = language;
+            this.notes = notes;
+        }
+
+        createPlanner = function() {
+            console.log(this.year, newPlanner.year);
+}
+    }
+
+    let newPlanner = new Planner(...Object.values(json));
+    console.log("newPlanner", newPlanner);
+    newPlanner.createPlanner();
+
+    // a nakonec funkce na download vytvořeného souboru
+}
