@@ -219,6 +219,10 @@ table tr:nth-of-type(6) input {
   height: 2rem;
 }
 
+#generator-form select[name="year"] {
+  background-color: white;
+}
+
 #generator-form input[type="color"] {
   background-color: transparent;
   width: 100%;
@@ -515,7 +519,7 @@ span.polygon {
   background-size: var(--pattern-size);
   background-repeat: repeat;
   background-attachment: fixed;
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
 }
 
 #grid-parent {
@@ -553,10 +557,6 @@ footer {
   background-repeat: repeat;
   background-attachment: fixed;
   color: black;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   text-align: center;
   height: 3rem;
   padding-top: 1rem;
@@ -705,6 +705,10 @@ footer {
   #preview-orientation.orientation-portrait {
     width: 80%;
   }
+
+  footer {
+    font-size: 0.6rem;
+  }
 }
 
 @media (max-width: 560px) {
@@ -712,5 +716,9 @@ footer {
     cursor: inherit;
     filter: none;
     object-fit: cover;
+  }
+
+  form {
+    font-size: 0.75rem;
   }
 }
