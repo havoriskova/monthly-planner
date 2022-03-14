@@ -505,7 +505,7 @@ span.polygon {
 
 .grid-child {
   border: solid var(--color-for-preview) 0.2px;
-  padding: 5%;
+  padding: 8%;
 }
 
 .changing-color {
