@@ -70,8 +70,6 @@
         <!--kvůli tlačítku je v main další element-->
 
         <form id="generator-form">
-          <!-- action="url"- třeba "/form", kdy před tím je moje stránka, a za tím ta query. Můžu nechat prázdné, když to posílám na stejné stránky. method="get" - default, kdy se objeví ta query v url,
-          a nebo method="post", kdy se to info hodí jinam-->
           <p>
             Fill this form according to your preference -
             <span id="text-change">on the left side</span> you can see a preview
@@ -91,9 +89,9 @@
             </tr>
 
             <tr>
-              <th><label for="color">color: </label></th>
-              <td id="color">
-                <input type="color" name="color" id="color" />
+              <th><label for="input-color">color: </label></th>
+              <td>
+                <input type="color" name="color" id="input-color" />
               </td>
             </tr>
 
@@ -105,7 +103,6 @@
                   id="landscape"
                   value="landscape"
                   name="orientation"
-                  checked
                 /><label for="landscape" class="radio-label">landscape</label>
                 <input
                   type="radio"
@@ -124,7 +121,6 @@
                   id="bitter"
                   value="bitter"
                   name="font"
-                  checked
                 /><label for="bitter" class="radio-label">bitter</label>
                 <input
                   type="radio"
@@ -149,7 +145,6 @@
                   id="english"
                   value="english"
                   name="language"
-                  checked
                 /><label for="english" class="radio-label">english</label>
                 <input
                   type="radio"
@@ -170,11 +165,9 @@
               <th><label for="form-notes">extra space for notes:</label></th>
               <td class="td-polygon">
                 <label for="form-notes"
-                  ><input
-                    type="checkbox"
-                    id="form-notes"
-                    name="form-notes"
-                    checked /><span class="polygon"></span
+                  ><input type="checkbox" id="form-notes" name="notes" /><span
+                    class="polygon"
+                  ></span
                 ></label>
               </td>
             </tr>
