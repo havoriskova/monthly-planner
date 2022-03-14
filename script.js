@@ -107,11 +107,7 @@ let previewLook = {
                 selectedYear = previewLook.defaultYear;
                 previewYear.innerText = selectedYear;
                 fetching(true); // = načíst kalendář
-                // option s value previewLook.defaultYear  
-                // .setAttribute("selected", ""); 
-
                 let option = document.querySelector(`option[value="${previewLook.defaultYear}"]`);
-                console.log(option);
                 option.setAttribute("selected", "");
             
             } else {
@@ -305,8 +301,8 @@ generatorForm.addEventListener("submit", handleSubmit);
 
 function generatePlanner(json) {
 
-console.log(json.color);
-console.log(Object.keys(json).length); // když 5, tak to znamená, že není Notes // underfined v class OOP
+//console.log(json.color);
+//console.log(Object.keys(json).length); // když 5, tak to znamená, že není Notes // underfined v class OOP
 
 
     class Planner { // na pořadí u constructoru záleží
@@ -319,14 +315,18 @@ console.log(Object.keys(json).length); // když 5, tak to znamená, že není No
             this.notes = notes;
         }
 
-        createPlanner = function() {
-            console.log(this.year, newPlanner.year);
-}
+        createPlanner() {
+            console.log(this.year);
+        }
+
+  
     }
 
     let newPlanner = new Planner(...Object.values(json));
     console.log("newPlanner", newPlanner);
-    newPlanner.createPlanner();
+    newPlanner.createPlanner(); // po vytvoření planneru můžu vyvolat funkci create
+    // můžu další funkci "stáhnout" vyvolat buď dalším řádkem, a nebo přímo v té funkci create
 
+    
     // a nakonec funkce na download vytvořeného souboru
 }
