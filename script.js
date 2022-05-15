@@ -317,6 +317,57 @@ function generatePlanner(json) {
 
         createPlanner() {
             console.log(this.year);
+
+            let pageWidth;
+            let pageHeight;
+
+            if(this.orientation === "landscape") {
+                    pageWidth = 297;
+                    pageHeight = 210;
+                } else {
+                    pageWidth = 210;
+                    pageHeight = 297;   
+            }
+
+            //************ Zkouška, zda-li funguje vše na leden - pak přidám loop s template ?? */
+            let january = document.getElementById("preview");
+            let renderingOptions = {backgroundColor: "#113", scale:3};
+            
+            html2canvas(january, renderingOptions).then(canvas => {
+                      let january__data = canvas.toDataURL("image/png");
+                    
+                    let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
+                    currentPlanner.addImage(january__data, `JPEG`, 0, 0, pageWidth, pageHeight);
+                    currentPlanner.save(`planner.pdf`);
+                
+            });
+
+    
+
+            /**************** konec zkoušky */
+
+
+            // let months = [];
+            // let renderingOptions = {backgroundColor: "#113", scale:3};
+            //
+            // for(let i = 0; i < 12; i++;) {
+            //      let month = ....; // TOHLE MI MÁ DÁT <DIV> - asi vyvolat funkci
+
+            //
+            //      html2canvas(month, renderingOptions).then(canvas => {
+            //          let month__dataURL = canvas.toDataURL("image/png");
+            //          months.push(month__dataURL);    
+            //      })
+            // } // tím pádem mám array months se všema Data URL obrázkama, co můžu addnout do pdf
+            //
+            // let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
+            // for(let i = 0; i < 12; i++;) {
+            //      currentPlanner.addImage(months[i], `JPEG`, 0, 0, pageWidth, pageHeight);
+            //      if(i !== 12) {
+            //      currentPlanner.addPage();}
+            //}
+            // currentPlanner.save(`planner.pdf`);
+
         }
 
   
