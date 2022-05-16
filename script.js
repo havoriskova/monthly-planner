@@ -119,7 +119,7 @@ let previewLook = {
 
             function fetching(isItFirstTime) {
 
-            fetch("https://hungry-mirzakhani-0f7c44.netlify.app/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
+            fetch("http://localhost:3000/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
             .then(response => {
                 return response.json();
             })
@@ -283,14 +283,14 @@ formFonts.forEach(font => font.addEventListener("input", previewLook.changeFont)
 
 function handleSubmit(e) {
  e.preventDefault();
- console.log("tadá event objekt" ,  e);
+ //console.log("tadá event objekt" ,  e);
 
 const formEntries = new FormData(generatorForm).entries();
 const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
 // console.log(new FormData(generatorForm)); // objekt, prototyp FormData
 // console.log(formEntries); // objekt, prototype Interator
 // console.log(Array.from(formEntries));
-console.log("json", json); // objekt, prototype Object
+//console.log("json", json); // objekt, prototype Object
 
 generatePlanner(json);
 }
@@ -329,55 +329,54 @@ function generatePlanner(json) {
                     pageHeight = 297;   
             }
 
-            //************ Zkouška, zda-li funguje vše na leden - pak přidám loop s template ?? */
-            let january = document.getElementById("preview");
-            let renderingOptions = {backgroundColor: "#113", scale:3};
+            //************ Zkouška, zda-li funguje vše na leden */
+            // let january = document.getElementById("preview");
+            // let renderingOptions = {backgroundColor: "#113", scale:4};
             
-            html2canvas(january, renderingOptions).then(canvas => {
-                      let january__data = canvas.toDataURL("image/png");
+            // html2canvas(january, renderingOptions).then(canvas => {
+            //           let january__data = canvas.toDataURL("image/png");
                     
-                    let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
-                    currentPlanner.addImage(january__data, `JPEG`, 0, 0, pageWidth, pageHeight);
-                    currentPlanner.save(`planner.pdf`);
+            //         let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
+            //         currentPlanner.addImage(january__data, `JPEG`, 0, 0, pageWidth, pageHeight);
+            //         currentPlanner.save(`planner.pdf`);
                 
-            });
-
-    
-
+            // });
             /**************** konec zkoušky */
 
+            /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
+            let months = [];
+            let renderingOptions = {backgroundColor: "#113", scale:3};
+            let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
+            
+            for(let i = 0; i < 12; i++) {
+                 let month = document.getElementById("name-of-year"); // TOHLE MI MÁ DÁT <DIV> - asi vyvolat funkci
 
-            // let months = [];
-            // let renderingOptions = {backgroundColor: "#113", scale:3};
-            //
-            // for(let i = 0; i < 12; i++;) {
-            //      let month = ....; // TOHLE MI MÁ DÁT <DIV> - asi vyvolat funkci
-
-            //
-            //      html2canvas(month, renderingOptions).then(canvas => {
-            //          let month__dataURL = canvas.toDataURL("image/png");
-            //          months.push(month__dataURL);    
-            //      })
-            // } // tím pádem mám array months se všema Data URL obrázkama, co můžu addnout do pdf
-            //
-            // let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
-            // for(let i = 0; i < 12; i++;) {
-            //      currentPlanner.addImage(months[i], `JPEG`, 0, 0, pageWidth, pageHeight);
-            //      if(i !== 12) {
-            //      currentPlanner.addPage();}
-            //}
-            // currentPlanner.save(`planner.pdf`);
-
+                html2canvas(month, renderingOptions)
+                        .then(canvas => {
+                            let month__dataURL = canvas.toDataURL("image/png");
+                            months.push(month__dataURL); 
+                            console.log(months);   
+                            if (months.length == 12) {
+                                console.log("začátek druhýho promisu před druhou smyčkou");
+                                for(let j = 0; j < 12; j++) {
+                                    currentPlanner.addImage(months[j], `JPEG`, 0, 0, pageWidth, pageHeight);
+                                    console.log("druhý promis");
+                                    if(j !== 11) {
+                                        currentPlanner.addPage();}
+                                    if(j == 11) {
+                                        currentPlanner.save(`planner.pdf`);
+                                    }
+                                 } 
+                            }
+                         }
+                )
+            }
+            /****************** konec asynchronního JS, co mi vygeneruje 12stránkový pdf soubor*/
         }
 
-  
     }
 
     let newPlanner = new Planner(...Object.values(json));
-    console.log("newPlanner", newPlanner);
-    newPlanner.createPlanner(); // po vytvoření planneru můžu vyvolat funkci create
-    // můžu další funkci "stáhnout" vyvolat buď dalším řádkem, a nebo přímo v té funkci create
-
-    
-    // a nakonec funkce na download vytvořeného souboru
+    //console.log("newPlanner", newPlanner);
+    newPlanner.createPlanner(); 
 }

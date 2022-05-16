@@ -391,6 +391,7 @@ span.polygon {
   background-color: white;
   padding: 20px;
   color: black;
+  position: absolute;
   display: flex;
   flex-direction: column;
   object-fit: cover;
