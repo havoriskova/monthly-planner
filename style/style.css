@@ -467,7 +467,7 @@ span.polygon {
 }
 
 #calendar::after {
-  /*- na zakrytí vnější border u jednotlivých dnů*/
+  /*- na zakrytí vnější border u jednotlivých dnů - nefunguje při scale s html2canvas*/
   position: absolute;
   content: "";
   width: 101%;
@@ -475,7 +475,7 @@ span.polygon {
   top: -0.5%;
   left: -0.5%;
   border: 5px white solid;
-}
+} 
 
 #preview.orientation-portrait #calendar::after {
   border: 4px white solid;

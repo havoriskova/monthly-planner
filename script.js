@@ -119,7 +119,7 @@ let previewLook = {
 
             function fetching(isItFirstTime) {
 
-            fetch("http://localhost:3000/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
+            fetch("https://hungry-mirzakhani-0f7c44.netlify.app/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
             .then(response => {
                 return response.json();
             })
@@ -343,13 +343,20 @@ function generatePlanner(json) {
             // });
             /**************** konec zkoušky */
 
+            /*************** tady musím nějak vytvořit 12 měsíců divů, co pak hodím do té async smyčky s html2canvas*/
+            let monthDivs = [];
+
+            for(let i=0; i < 12; i++) {
+                monthDivs[i];
+            }
+
             /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
             let months = [];
-            let renderingOptions = {backgroundColor: "#113", scale:3};
+            let renderingOptions = {backgroundColor: "#113", scale:4};
             let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
             
             for(let i = 0; i < 12; i++) {
-                 let month = document.getElementById("name-of-year"); // TOHLE MI MÁ DÁT <DIV> - asi vyvolat funkci
+                 let month = document.getElementById("preview"); // TOHLE MI MÁ DÁT <DIV> - asi vyvolat funkci
 
                 html2canvas(month, renderingOptions)
                         .then(canvas => {
