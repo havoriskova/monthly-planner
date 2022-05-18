@@ -402,7 +402,8 @@ span.polygon {
 }
 
 .template {
-  z-index: 1;
+  box-shadow: none;
+  z-index: 1; /**/
 }
 
 /* 

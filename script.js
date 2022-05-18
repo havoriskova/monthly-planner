@@ -318,6 +318,19 @@ function generatePlanner(json) {
         createPlanner() {
             console.log(this.year);
 
+            /****************** POKUSY S TEMPLATEM */
+            let temp, tempItem, tempJanurary, tempFebruary;
+
+            temp = document.getElementsByTagName("template")[0];
+            tempItem = temp.content.querySelector("div.template");
+            console.log(tempItem);
+
+            tempFebruary = document.importNode(tempItem, true);
+            tempFebruary.classList.add("hahaha");
+            document.getElementById("preview-orientation").appendChild(tempFebruary);
+
+            /******************* */
+
             let pageWidth;
             let pageHeight;
 
