@@ -387,7 +387,7 @@ span.polygon {
   aspect-ratio: 1 / 1.4142;
 }
 
-#preview {
+#preview, .template {
   background-color: white;
   padding: 20px;
   color: black;
@@ -399,6 +399,10 @@ span.polygon {
   box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
   width: 100%;
   height: 100%;
+}
+
+.template {
+  z-index: 1;
 }
 
 /* 
@@ -424,11 +428,11 @@ span.polygon {
   border: solid red 1px;
 } */
 
-#preview h3 {
+#preview h3, .template h3 {
   margin: 0;
 }
 
-#date {
+.preview__date {
   flex: 0 0 5%;
   text-transform: uppercase;
   display: flex;
@@ -436,7 +440,7 @@ span.polygon {
   padding: 1%;
 }
 
-#days-of-week-container {
+.preview__days-of-week-container {
   flex: 0 0 5%;
   text-transform: capitalize;
   display: grid;
@@ -445,7 +449,7 @@ span.polygon {
   color: white;
 }
 
-#days-of-week-container * {
+.preview__days-of-week-container * {
   background-color: var(--color-for-preview);
   font-size: 0.4rem;
   display: grid;
@@ -461,12 +465,12 @@ span.polygon {
   font-family: sans-serif;
 } */
 
-#calendar {
+.preview__calendar {
   flex: 1 1 60%;
   position: relative;
 }
 
-#calendar::after {
+.preview__calendar::after {
   /*- na zakrytí vnější border u jednotlivých dnů - nefunguje při scale s html2canvas*/
   position: absolute;
   content: "";
@@ -481,7 +485,7 @@ span.polygon {
   border: 4px white solid;
 }
 
-#notes {
+.preview__notes {
   flex: 0 0 20%;
   border: solid var(--color-for-preview) 1px;
   margin-top: 2%;

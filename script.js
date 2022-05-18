@@ -66,17 +66,17 @@ changeWidth();
 const root = document.querySelector(":root");
 const preview = document.getElementById("preview");
 const generatorForm = document.getElementById("generator-form");
-const calendar = document.getElementById("calendar");
+const calendar = document.querySelector(".preview__calendar");
 const formYear = document.getElementById("form-year");
-let previewYear = document.getElementById("name-of-year");
+let previewYear = document.querySelector(".preview__name-of-year");
 let orientationForm = document.querySelectorAll(`input[name="orientation"]`);
 const previewOrientation = document.querySelector("#preview-orientation");
 let formLanguages = document.querySelectorAll(`input[name="language"]`);
 let daysOfWeekPreview = document.querySelectorAll(".day-of-week");
-let previewMonth = document.getElementById("name-of-month");
+let previewMonth = document.querySelector(".preview__name-of-month");
 const color = document.getElementById("input-color");
 const formNotes = document.getElementById("form-notes");
-const notes = document.getElementById("notes");
+const notes = document.querySelector(".preview__notes");
 const formFonts = document.querySelectorAll(`input[name="font"]`);
 
 
