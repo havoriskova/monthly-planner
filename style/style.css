@@ -2,7 +2,6 @@
   --golden: rgb(241, 224, 224);
   --pattern-size: 10%;
   --pattern-white: url("./img/pattern-white-5.png");
-  --pattern-black: url("./img/pattern-black-4.png");
   --color-for-preview: black;
 }
 
@@ -25,7 +24,7 @@ html {
 
 body {
   margin: 0;
-  background-color: lightblue; /*pak pude pryč!*/
+  background-color: lightgreen; 
   color: white;
   font-family: "Bitter", serif;
   /* padding-bottom: 3rem; pro footer */
@@ -110,14 +109,10 @@ h2 {
 }
 
 #about {
-  background-image: var(--pattern-black);
-  background-size: var(--pattern-size);
-  background-repeat: repeat;
-  background-attachment: fixed;
   padding-top: 6rem; /*kvůli  navigaci, aby při hoveru šlo vidět 
   jednolité pozadí*/
   text-align: justify;
-  color: gold;
+  color: white;
 }
 
 /**/
@@ -387,7 +382,7 @@ span.polygon {
   aspect-ratio: 1 / 1.4142;
 }
 
-#preview, .template {
+.preview, .template {
   background-color: white;
   padding: 20px;
   color: black;
@@ -402,8 +397,19 @@ span.polygon {
 }
 
 .template {
-  box-shadow: none;
-  z-index: 1; /**/
+  /* box-shadow: none; */
+  z-index: 0; /**/
+}
+
+.template.month {
+box-shadow: inset 50px 50px orange;
+/* display: none; tohle nemůžu použít, jen z-index*/
+z-index: -2;
+}
+
+
+.template.month.june {
+  z-index: 100;
 }
 
 /* 
@@ -429,7 +435,7 @@ span.polygon {
   border: solid red 1px;
 } */
 
-#preview h3, .template h3 {
+.preview h3, .template h3 {
   margin: 0;
 }
 
@@ -521,10 +527,6 @@ span.polygon {
 /**/
 
 #gallery {
-  background-image: var(--pattern-black);
-  background-size: var(--pattern-size);
-  background-repeat: repeat;
-  background-attachment: fixed;
   padding-bottom: 3rem;
 }
 

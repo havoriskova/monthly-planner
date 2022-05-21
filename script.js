@@ -61,10 +61,27 @@ window.addEventListener("resize", changeWidth);
 changeWidth();
 // ---------------- konec nastavení výšky
 
+// ----------------- zobrazit preview z template
+
+
+let temp, tempItem, tempPreview;
+
+temp = document.getElementsByTagName("template")[0];
+tempItem = temp.content.querySelector("div.template");
+// console.log(tempItem);
+
+tempPreview = document.importNode(tempItem, true);
+tempPreview.classList.add("preview");
+document.getElementById("preview-orientation").appendChild(tempPreview);
+
+
+// ---------------- konec zobrazaní preview z template
+
+
 // začátek
 
 const root = document.querySelector(":root");
-const preview = document.getElementById("preview");
+const preview = document.querySelector("template"); /* ono to bere jen první .preview */
 const generatorForm = document.getElementById("generator-form");
 const calendar = document.querySelector(".preview__calendar");
 const formYear = document.getElementById("form-year");
@@ -119,7 +136,7 @@ let previewLook = {
 
             function fetching(isItFirstTime) {
 
-            fetch("https://hungry-mirzakhani-0f7c44.netlify.app/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
+            fetch("http://localhost:3000/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
             .then(response => {
                 return response.json();
             })
@@ -233,20 +250,22 @@ let previewLook = {
 
         changeFont: function(e) {
 
+            let previewFont = document.getElementById("preview-container");
+
             if(!e) {
                 let font = document.getElementById(previewLook.defaultFont);
                 font.setAttribute("checked", "");
-                preview.style.fontFamily = previewLook.defaultFont;
+                previewFont.style.fontFamily = previewLook.defaultFont;
 
             } else {
 
                 if (formFonts[1].checked) {
-                    preview.style.fontFamily = `serif`;
+                    previewFont.style.fontFamily = `serif`;
                 } else if (formFonts[2].checked) {
-                    preview.style.fontFamily = `sans-serif`;
+                    previewFont.style.fontFamily = `sans-serif`;
                 }
                 else if (formFonts[0].checked) {
-                    preview.style.fontFamily = `bitter`;
+                    previewFont.style.fontFamily = `bitter`;
                 } }
         },
 
@@ -319,15 +338,15 @@ function generatePlanner(json) {
             console.log(this.year);
 
             /****************** POKUSY S TEMPLATEM */
-            let temp, tempItem, tempJanurary, tempFebruary;
+            // let temp, tempItem, tempJanurary, tempFebruary, tempMarch;
 
-            temp = document.getElementsByTagName("template")[0];
-            tempItem = temp.content.querySelector("div.template");
-            console.log(tempItem);
+            // temp = document.getElementsByTagName("template")[0];
+            // tempItem = temp.content.querySelector("div.template");
+            // console.log(tempItem);
 
-            tempFebruary = document.importNode(tempItem, true);
-            tempFebruary.classList.add("hahaha");
-            document.getElementById("preview-orientation").appendChild(tempFebruary);
+            // tempFebruary = document.importNode(tempItem, true);
+            // tempFebruary.classList.add("month");
+            // document.getElementById("preview-orientation").appendChild(tempFebruary);
 
             /******************* */
 
@@ -357,10 +376,89 @@ function generatePlanner(json) {
             /**************** konec zkoušky */
 
             /*************** tady musím nějak vytvořit 12 měsíců divů, co pak hodím do té async smyčky s html2canvas*/
-            let monthDivs = [];
+            
+            let monthsName = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
             for(let i=0; i < 12; i++) {
-                monthDivs[i];
+
+                let temp, tempItem, tempMonth;
+
+                temp = document.getElementsByTagName("template")[0];
+                tempItem = temp.content.querySelector("div.template");
+                console.log(tempItem + "zkouška nové funkce");
+
+                tempMonth = tempItem.cloneNode(true);
+                tempMonth.classList.add("month");
+                tempMonth.classList.add(`${monthsName[i]}`);
+                document.getElementById("preview-orientation").appendChild(tempMonth);
+
+                // potřebuju přiřadit ke každýmu tempMonth jinej měsíc:
+
+                let monthCurrent = document.querySelectorAll(".month")[i];
+                let calendarCurrent = monthCurrent.querySelector(".calendar");
+                console.log(monthCurrent);
+           
+            fetch("http://localhost:3000/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
+            .then(response => {
+                return response.json();
+            })
+            .then(jsondata => useDataTwo(jsondata, this.year, this.notes, i));
+            
+                function useDataTwo(years, year, notes, i){
+
+            
+                    let monthName = monthsName[i];
+                    let selectedYear = year;
+                    console.log(year, notes, " funguje!");
+                   
+                  // console.log("zkouška" + i + years[`${selectedYear}`][`${monthName}`][1]); 
+            
+                    let daysBefore = years[`${selectedYear}`][`${monthName}`][1];
+                    let days = years[`${selectedYear}`][`${monthName}`][2];
+                    let daysAfter = years[`${selectedYear}`][`${monthName}`][3];
+                
+
+                        for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
+                            generateNumbers(i, true);
+                        }
+
+                        for(let i = days[0]; i <= days[1]; i++) {
+                            generateNumbers(i, false);
+                        }
+
+                        for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
+                        generateNumbers(i, true);
+                        }
+
+
+                        /**další chuťovky */
+                    
+                        let notesCurrent = document.querySelectorAll(".preview__notes");
+
+                        if(notes !== "on") {
+                       notesCurrent.forEach(note => note.classList.add("no-notes"));
+                       console.log("notes halooo 2???")
+                        }
+                    /**konečně konec? */
+                }
+
+                        function generateNumbers (i, isGray){
+                        
+                            let day = document.createElement("span");
+                            day.innerHTML = i;
+                            calendarCurrent.appendChild(day);
+                            day.classList.add("grid-child");
+
+                            if(isGray){
+                            day.classList.add("gray-numbers");
+                            } else if(!isGray) {
+                            day.classList.add("changing-color");
+                            }
+                    
+                    }
+
+
+                //*
             }
 
             /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
@@ -368,32 +466,54 @@ function generatePlanner(json) {
             let renderingOptions = {backgroundColor: "#113", scale:4};
             let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
             
-            for(let i = 0; i < 12; i++) {
-                 let month = document.getElementById("preview"); // TOHLE MI MÁ DÁT <DIV> - asi vyvolat funkci
+            let monthsCurrent = document.querySelectorAll(".template.month");
 
-                html2canvas(month, renderingOptions)
-                        .then(canvas => {
-                            let month__dataURL = canvas.toDataURL("image/png");
-                            months.push(month__dataURL); 
-                            console.log(months);   
-                            if (months.length == 12) {
-                                console.log("začátek druhýho promisu před druhou smyčkou");
-                                for(let j = 0; j < 12; j++) {
-                                    currentPlanner.addImage(months[j], `JPEG`, 0, 0, pageWidth, pageHeight);
-                                    console.log("druhý promis");
-                                    if(j !== 11) {
-                                        currentPlanner.addPage();}
-                                    if(j == 11) {
-                                        currentPlanner.save(`planner.pdf`);
+            if (monthsCurrent.length === 12) {
+
+                    for(let z = 0; z < 12; z++) {
+                        let month = document.querySelectorAll(".month")[z]; // TOHLE MI MÁ DÁT <DIV> - potřebuju teda
+                        // dopředu mít hotovejch 12 divů s class .month už v dokumentu
+                        console.log("wtf:   " + month);
+
+                        html2canvas(month, renderingOptions)
+                                .then(canvas => {
+                                    let month__dataURL = canvas.toDataURL("image/png");
+                                    months.push(month__dataURL); 
+                                    console.log(months); // divný, že v console je v array rovnou 12 měsíců
+                                    if (months.length == 12) { 
+                                        console.log("začátek druhýho promisu před druhou smyčkou");
+                                        for(let j = 0; j < 12; j++) {
+                                            currentPlanner.addImage(months[j], `JPEG`, 0, 0, pageWidth, pageHeight);
+                                            console.log("druhý promis");
+                                            if(j !== 11) {
+                                                currentPlanner.addPage();}
+                                            if(j == 11) {
+                                                currentPlanner.save(`planner.pdf`);
+                                            }
+                                        } 
                                     }
-                                 } 
-                            }
-                         }
-                )
-            }
+                                }
+                        )
+                    }
+
+                    /*** zkouška, proč mi to nefunguje - taky to generuje bez calendáře a innerHTML*/
+                    // let zkouskaMonth = document.querySelector(".february");
+                    //      html2canvas(zkouskaMonth, renderingOptions)
+                    //       .then(canvas => {
+                    //         let month__dataURL = canvas.toDataURL("image/png");
+                    //         let zkouskaPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
+                    //         zkouskaPlanner.addImage(month__dataURL, `JPEG`, 0, 0, pageWidth, pageHeight);
+                    //         console.log("zkouska promis");
+                                   
+                    //         zkouskaPlanner.save(`zkouskaPlanner.pdf`);
+                                
+                        
+                    //      } )
+
+                    /***konec zkoušky */
             /****************** konec asynchronního JS, co mi vygeneruje 12stránkový pdf soubor*/
         }
-
+    }
     }
 
     let newPlanner = new Planner(...Object.values(json));

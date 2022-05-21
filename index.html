@@ -177,43 +177,27 @@
 
         <section id="preview-container">
           <section id="preview-orientation" class="orientation-landscape">
-            <section id="preview">
-              <section class="preview__date changing-color">
-                <h3 class="preview__name-of-month">January</h3>
-                <!----->
-                <span class="preview__name-of-year">2022</span>
-              </section>
-              <section class="preview__days-of-week-container">
-                <span class="day-of-week"></span>
-                <span class="day-of-week"></span>
-                <span class="day-of-week"></span>
-                <span class="day-of-week"></span>
-                <span class="day-of-week"></span>
-                <span class="day-of-week"></span>
-                <span class="day-of-week"></span>
-              </section>
-              <section class="preview__calendar grid-container"></section>
-              <!----->
-              <section class="preview__notes changing-color">Notes:</section>
-            </section>
             <!--********* TEMPLATE ************-->
             <template>
-              <div class="template february">
+              <div class="template">
+                <!--až při kopii templatu dát class preview / month -->
                 <!--class s jménem MĚSÍCE měnit pak ve smyčce, použít array lang-->
                 <section class="preview__date changing-color">
                   <h3 class="preview__name-of-month">Template</h3>
                   <span class="preview__name-of-year">Template</span>
                 </section>
                 <section class="preview__days-of-week-container">
-                  <span class="day-of-week"></span>
-                  <span class="day-of-week"></span>
+                  <span class="day-of-week">template</span>
+                  <span class="day-of-week">template</span>
                   <span class="day-of-week"></span>
                   <span class="day-of-week"></span>
                   <span class="day-of-week"></span>
                   <span class="day-of-week"></span>
                   <span class="day-of-week"></span>
                 </section>
-                <section class="preview__calendar grid-container"></section>
+                <section
+                  class="preview__calendar calendar grid-container"
+                ></section>
                 <section class="preview__notes changing-color">Notes:</section>
               </div>
             </template>
