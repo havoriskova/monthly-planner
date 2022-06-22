@@ -24,7 +24,7 @@ html {
 
 body {
   margin: 0;
-  background-color: lightgreen; 
+  background-color: rgb(35, 35, 35); 
   color: white;
   font-family: "Bitter", serif;
   /* padding-bottom: 3rem; pro footer */
@@ -391,7 +391,6 @@ span.polygon {
   flex-direction: column;
   object-fit: cover;
   font-size: 0.4rem;
-  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
   width: 100%;
   height: 100%;
 }
@@ -399,18 +398,24 @@ span.polygon {
 .template {
   /* box-shadow: none; */
   z-index: 0; /**/
+  box-shadow: none;
 }
 
-.template.month {
-box-shadow: inset 50px 50px orange;
-/* display: none; tohle nemůžu použít, jen z-index*/
-z-index: -2;
-}
-
-
-.template.month.june {
+.preview {
+  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
   z-index: 100;
 }
+
+/* .template.month {
+box-shadow: inset 50px 50px orange;
+/* display: none; tohle nemůžu použít, jen z-index
+z-index: -2;
+} */
+
+
+/* .template.month.june {
+  z-index: 100;
+} */
 
 /* 
 #preview {
@@ -454,6 +459,20 @@ z-index: -2;
   grid-template-columns: repeat(7, 1fr);
   column-gap: 1px;
   color: white;
+  /* box-shadow: 0 0 0em .7em white; /*tohle nefunguje pro printscreen, jen pro preview
+  z-index: 20; */
+  position: relative;
+}
+
+.preview__days-of-week-container::after {
+content: "";
+position: absolute;
+bottom: -0.4em;
+height: .5em;
+left: 0;
+right: 0;
+background-color: white;
+z-index: 20;
 }
 
 .preview__days-of-week-container * {
@@ -477,8 +496,8 @@ z-index: -2;
   position: relative;
 }
 
-.preview__calendar::after {
-  /*- na zakrytí vnější border u jednotlivých dnů - nefunguje při scale s html2canvas*/
+/* .preview__calendar::after {
+  /*- na zakrytí vnější border u jednotlivých dnů - nefunguje při scale s html2canvas
   position: absolute;
   content: "";
   width: 101%;
@@ -486,17 +505,18 @@ z-index: -2;
   top: -0.5%;
   left: -0.5%;
   border: 5px white solid;
-} 
-
+}   */
+/* 
 #preview.orientation-portrait #calendar::after {
   border: 4px white solid;
-}
+} */
 
 .preview__notes {
   flex: 0 0 20%;
   border: solid var(--color-for-preview) 1px;
   margin-top: 2%;
   padding: 1%;
+  display: relative;
 }
 
 .no-notes {
@@ -518,6 +538,22 @@ z-index: -2;
 .grid-child {
   border: solid var(--color-for-preview) 0.2px;
   padding: 8%;
+}
+
+.grid-child:nth-child(7n) {
+  border-right: none;
+}
+
+.grid-child:nth-child(7n+1), .grid-child:first-child {
+  border-left: none;
+}
+
+.grid-child:last-child, .grid-child:nth-last-child(2), .grid-child:nth-last-child(3), .grid-child:nth-last-child(4), .grid-child:nth-last-child(5), .grid-child:nth-last-child(6), .grid-child:nth-last-child(7) {
+  border-bottom: none;
+}
+
+.grid-child:first-child, .grid-child:nth-child(2), .grid-child:nth-child(3), .grid-child:nth-child(4), .grid-child:nth-child(5), .grid-child:nth-child(6), .grid-child:nth-child(7) {
+  border-top: none;
 }
 
 .changing-color {

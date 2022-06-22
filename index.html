@@ -33,12 +33,12 @@
       <h2>About this webpage</h2>
       <article>
         <p>
-          The most usefull thing for planning - at least for me - is a monthly
-          planner. I used to have very pretty large diaries, but soon during the
+          The most useful thing for planning - at least for me - is a monthly
+          planner. I used to have pretty and large diaries, but soon during the
           year I´ve noticed that I hardly open them. I was also lazy to turn the
           pages to see if I haven´t forget something to do in the previous
           weeks. Monthly planner helped me a lot with organizing stuff, because
-          it is simply just one page. It feels lighter and more fresh then just
+          it is simply just one page. It feels lighter and more fresh than just
           enormous amount of pages.
         </p>
         <!-- <p>
@@ -55,8 +55,7 @@
           code, I decided to make a monthly planner generator. If you strugle
           with your design, just look in the
           <a href="#gallery" class="link-in-text">gallery</a> for an
-          inspiration! You can also find there possible ways how to use your
-          monthly planner.
+          inspiration!
         </p>
       </article>
     </aside>
@@ -180,11 +179,14 @@
             <!--********* TEMPLATE ************-->
             <template>
               <div class="template">
-                <!--až při kopii templatu dát class preview / month -->
+                <!--až při kopii templatu dát class preview / month, a preview mít vždy z-index 1
+                a ty ostatní měsíce po downloandu smazat -->
                 <!--class s jménem MĚSÍCE měnit pak ve smyčce, použít array lang-->
                 <section class="preview__date changing-color">
                   <h3 class="preview__name-of-month">Template</h3>
-                  <span class="preview__name-of-year">Template</span>
+                  <span class="preview__name-of-year name-of-year"
+                    >Template</span
+                  >
                 </section>
                 <section class="preview__days-of-week-container">
                   <span class="day-of-week">template</span>
@@ -260,6 +262,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
     <script src="./html2canvas.min.js"></script>
     <!--mít html2canvas po jsPDF, jinak to blbne !! -->
+    <script src="./years.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

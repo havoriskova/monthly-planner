@@ -136,11 +136,7 @@ let previewLook = {
 
             function fetching(isItFirstTime) {
 
-            fetch("http://localhost:3000/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
-            .then(response => {
-                return response.json();
-            })
-            .then(jsondata => useData(jsondata, isItFirstTime));
+            useData(yearsJS, isItFirstTime);
             }
 
 
@@ -361,6 +357,9 @@ function generatePlanner(json) {
                     pageHeight = 297;   
             }
 
+            document.getElementById("preview-container").style.fontFamily = this.font;
+
+
             //************ Zkouška, zda-li funguje vše na leden */
             // let january = document.getElementById("preview");
             // let renderingOptions = {backgroundColor: "#113", scale:4};
@@ -378,31 +377,61 @@ function generatePlanner(json) {
             /*************** tady musím nějak vytvořit 12 měsíců divů, co pak hodím do té async smyčky s html2canvas*/
             
             let monthsName = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+            let daysName = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+
+
+            const monthsNames = {
+            czech: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"] ,
+            dutch:  ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
+            english: ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+            }
+
+            const daysOfWeekNames = {
+            czech: ["pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota", "neděle"],
+            dutch: ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"],
+            english: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+            }
+
+            let isCalendarRendered = false;
 
             for(let i=0; i < 12; i++) {
 
-                let temp, tempItem, tempMonth;
+                let temp, cloneMonth, itemMonth;
 
                 temp = document.getElementsByTagName("template")[0];
-                tempItem = temp.content.querySelector("div.template");
-                console.log(tempItem + "zkouška nové funkce");
 
-                tempMonth = tempItem.cloneNode(true);
-                tempMonth.classList.add("month");
-                tempMonth.classList.add(`${monthsName[i]}`);
-                document.getElementById("preview-orientation").appendChild(tempMonth);
+                cloneMonth = temp.content.cloneNode(true);
+                itemMonth = cloneMonth.querySelector(".template");
+                itemMonth.classList.add("month");
+                itemMonth.classList.add(`${monthsName[i]}`);
+                document.getElementById("preview-orientation").appendChild(cloneMonth);
+
+                let contentMonthName = itemMonth.querySelector("h3");
+                contentMonthName.textContent = monthsNames[this.language][i];
+
+                let contentYear = itemMonth.querySelector(".name-of-year");
+                contentYear.textContent = this.year;
+
+                let contentDaysName = itemMonth.querySelectorAll(".day-of-week");
+                    for(let d = 0; d < 7; d++){
+                    contentDaysName[d].textContent = daysOfWeekNames[this.language][d];
+                    }
+          
+                let contentNotes = itemMonth.querySelector(".preview__notes");
+                      
+                if (this.notes !== "on") {
+                contentNotes.classList.add("no-notes");
+                }
+
 
                 // potřebuju přiřadit ke každýmu tempMonth jinej měsíc:
 
                 let monthCurrent = document.querySelectorAll(".month")[i];
                 let calendarCurrent = monthCurrent.querySelector(".calendar");
                 console.log(monthCurrent);
+                
            
-            fetch("http://localhost:3000/years.json")   // netlify https://hungry-mirzakhani-0f7c44.netlify.app/years.json // http://127.0.0.1:8887/years.json "200 ok" // 5500 live server // app.js 3000
-            .then(response => {
-                return response.json();
-            })
-            .then(jsondata => useDataTwo(jsondata, this.year, this.notes, i));
+             useDataTwo(yearsJS, this.year, this.notes, i);
             
                 function useDataTwo(years, year, notes, i){
 
@@ -433,12 +462,7 @@ function generatePlanner(json) {
 
                         /**další chuťovky */
                     
-                        let notesCurrent = document.querySelectorAll(".preview__notes");
-
-                        if(notes !== "on") {
-                       notesCurrent.forEach(note => note.classList.add("no-notes"));
-                       console.log("notes halooo 2???")
-                        }
+                      
                     /**konečně konec? */
                 }
 
@@ -455,11 +479,12 @@ function generatePlanner(json) {
                             day.classList.add("changing-color");
                             }
                     
-                    }
+                        }
 
-
+                    
                 //*
             }
+            isCalendarRendered = true;
 
             /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
             let months = [];
@@ -468,7 +493,7 @@ function generatePlanner(json) {
             
             let monthsCurrent = document.querySelectorAll(".template.month");
 
-            if (monthsCurrent.length === 12) {
+            if (monthsCurrent.length === 12 && isCalendarRendered === true) {
 
                     for(let z = 0; z < 12; z++) {
                         let month = document.querySelectorAll(".month")[z]; // TOHLE MI MÁ DÁT <DIV> - potřebuju teda
@@ -489,6 +514,8 @@ function generatePlanner(json) {
                                                 currentPlanner.addPage();}
                                             if(j == 11) {
                                                 currentPlanner.save(`planner.pdf`);
+                                                /*a nakonec vymazat všechny .template.month kromě preview */
+                                                monthsCurrent.forEach(month => month.remove());
                                             }
                                         } 
                                     }
