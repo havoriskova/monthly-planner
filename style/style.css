@@ -1,8 +1,9 @@
 :root {
   --golden: rgb(241, 224, 224);
-  --pattern-size: 10%;
+  --pattern-size: 50%;
   --pattern-white: url("./img/pattern-white-5.png");
   --color-for-preview: black;
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /*parallax scrolling by šel i pomocí perspektivy, translateZ scale 
@@ -24,7 +25,7 @@ html {
 
 body {
   margin: 0;
-  background-color: rgb(35, 35, 35); 
+  background-image: var(--gradient);
   color: white;
   font-family: "Bitter", serif;
   /* padding-bottom: 3rem; pro footer */
@@ -51,11 +52,12 @@ h1 {
   text-transform: capitalize;
   margin: 0;
   flex-grow: 1;
-  background-image: var(--pattern-white);
+  /* background-image: var(--pattern-white);
   background-size: var(--pattern-size);
   background-attachment: fixed;
-  background-repeat: repeat;
+  background-repeat: repeat; */
   /* background-color: rgb(200, 200, 200); */
+  background-color: white;
 }
 
 #menu-icon {
@@ -90,8 +92,8 @@ h1 a {
 
 h1 a {
   background-color: transparent;
-  color: gold;
-  text-shadow: 2px 2px 2px black, 0px 0px 2px black;
+  color: black;
+  /* text-shadow: 2px 2px 2px black, 0px 0px 2px black; */
 }
 nav li a:hover {
   background-color: transparent;
@@ -332,7 +334,7 @@ span.polygon {
 #submit-button {
   position: relative;
   z-index: 5;
-  background-color: lightgreen; /**/
+  background-image: var(--gradient);
   color: white;
   /* bottom: 40px;
   left: 50%;
@@ -347,7 +349,8 @@ span.polygon {
 }
 
 #submit-button:hover {
-  background-color: gold; /**/
+  background-color: gold; /*background-image: var(--gradient);*/ 
+  background-image: none;
   color: black;
 }
 
@@ -462,9 +465,10 @@ z-index: -2;
   /* box-shadow: 0 0 0em .7em white; /*tohle nefunguje pro printscreen, jen pro preview
   z-index: 20; */
   position: relative;
+  padding-bottom: .5em;
 }
 
-.preview__days-of-week-container::after {
+/* .preview__days-of-week-container::after { tohle zase nefunguje pro printscreen, jde to bokem
 content: "";
 position: absolute;
 bottom: -0.4em;
@@ -473,7 +477,7 @@ left: 0;
 right: 0;
 background-color: white;
 z-index: 20;
-}
+} */
 
 .preview__days-of-week-container * {
   background-color: var(--color-for-preview);
@@ -596,10 +600,11 @@ z-index: 20;
 }
 
 footer {
-  background-image: var(--pattern-white);
+  /* background-image: var(--pattern-white);
   background-size: var(--pattern-size);
   background-repeat: repeat;
-  background-attachment: fixed;
+  background-attachment: fixed; */
+  background-color: white;
   color: black;
   text-align: center;
   height: 3rem;
