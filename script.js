@@ -96,7 +96,17 @@ const formNotes = document.getElementById("form-notes");
 const notes = document.querySelector(".preview__notes");
 const formFonts = document.querySelectorAll(`input[name="font"]`);
 
+const nameOfMonths = {
+            czech: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"] ,
+            dutch:  ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
+            english: ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+            }
 
+const nameOfDaysOfWeek = {
+            czech: ["pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota", "neděle"],
+            dutch: ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"],
+            english: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+            }
 
 let previewLook = { 
     
@@ -136,15 +146,10 @@ let previewLook = {
 
             function fetching(isItFirstTime) {
 
-            useData(yearsJS, isItFirstTime);
-            }
-
-
-            function useData(years, isItFirstTime) {
            
-            let daysBefore = years[`${selectedYear}`].january[1];
-            let days = years[`${selectedYear}`].january[2];
-            let daysAfter = years[`${selectedYear}`].january[3];
+            let daysBefore = yearsJS[`${selectedYear}`].january[1];
+            let days = yearsJS[`${selectedYear}`].january[2];
+            let daysAfter = yearsJS[`${selectedYear}`].january[3];
 
             if (!isItFirstTime) {calendar.innerHTML= ``;}
 
@@ -178,18 +183,6 @@ let previewLook = {
 
         changeLanguage: function(e) {
 
-            const months = {
-            czech: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"] ,
-            dutch:  ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
-            english: ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-            }
-
-            const daysOfWeek = {
-            czech: ["pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota", "neděle"],
-            dutch: ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"],
-            english: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-            }
-
 
             let language;
             if (!e) {language = previewLook.defaultLanguage;
@@ -202,12 +195,12 @@ let previewLook = {
             changeWeek(language);
 
                 function changeMonth(language) {
-                previewMonth.innerHTML =  months[language][0]; 
+                previewMonth.innerHTML =  nameOfMonths[language][0]; 
                 }
 
                 function changeWeek(language) {
                 for(let i = 0; i < 7; i++) {
-                daysOfWeekPreview[i].innerHTML = daysOfWeek[language][i];
+                daysOfWeekPreview[i].innerHTML = nameOfDaysOfWeek[language][i];
                 }
                 }       
 
@@ -375,22 +368,7 @@ function generatePlanner(json) {
             /**************** konec zkoušky */
 
             /*************** tady musím nějak vytvořit 12 měsíců divů, co pak hodím do té async smyčky s html2canvas*/
-            
-            let monthsName = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-            let daysName = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-
-            const monthsNames = {
-            czech: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"] ,
-            dutch:  ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
-            english: ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-            }
-
-            const daysOfWeekNames = {
-            czech: ["pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota", "neděle"],
-            dutch: ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"],
-            english: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-            }
 
             let isCalendarRendered = false;
 
@@ -403,18 +381,18 @@ function generatePlanner(json) {
                 cloneMonth = temp.content.cloneNode(true);
                 itemMonth = cloneMonth.querySelector(".template");
                 itemMonth.classList.add("month");
-                itemMonth.classList.add(`${monthsName[i]}`);
+                itemMonth.classList.add(`${nameOfMonths[i]}`);
                 document.getElementById("preview-orientation").appendChild(cloneMonth);
 
                 let contentMonthName = itemMonth.querySelector("h3");
-                contentMonthName.textContent = monthsNames[this.language][i];
+                contentMonthName.textContent = nameOfMonths[this.language][i];
 
                 let contentYear = itemMonth.querySelector(".name-of-year");
                 contentYear.textContent = this.year;
 
                 let contentDaysName = itemMonth.querySelectorAll(".day-of-week");
                     for(let d = 0; d < 7; d++){
-                    contentDaysName[d].textContent = daysOfWeekNames[this.language][d];
+                    contentDaysName[d].textContent = nameOfDaysOfWeek[this.language][d];
                     }
           
                 let contentNotes = itemMonth.querySelector(".preview__notes");
@@ -431,20 +409,21 @@ function generatePlanner(json) {
                 console.log(monthCurrent);
                 
            
-             useDataTwo(yearsJS, this.year, this.notes, i);
+             fetchingTwo(this.year, i);
             
-                function useDataTwo(years, year, notes, i){
+                function fetchingTwo(year, i){
 
             
-                    let monthName = monthsName[i];
-                    let selectedYear = year;
-                    console.log(year, notes, " funguje!");
+                    let monthName = nameOfMonths["english"][i];
+
+            
+                  //  console.log(year, notes, " funguje!");
                    
                   // console.log("zkouška" + i + years[`${selectedYear}`][`${monthName}`][1]); 
             
-                    let daysBefore = years[`${selectedYear}`][`${monthName}`][1];
-                    let days = years[`${selectedYear}`][`${monthName}`][2];
-                    let daysAfter = years[`${selectedYear}`][`${monthName}`][3];
+                    let daysBefore = yearsJS[`${year}`][`${monthName}`][1];
+                    let days = yearsJS[`${year}`][`${monthName}`][2];
+                    let daysAfter = yearsJS[`${year}`][`${monthName}`][3];
                 
 
                         for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
@@ -458,12 +437,6 @@ function generatePlanner(json) {
                         for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
                         generateNumbers(i, true);
                         }
-
-
-                        /**další chuťovky */
-                    
-                      
-                    /**konečně konec? */
                 }
 
                         function generateNumbers (i, isGray){
@@ -507,7 +480,7 @@ function generatePlanner(json) {
                                     console.log(months); // divný, že v console je v array rovnou 12 měsíců
                                     if (months.length == 12) { 
                                         console.log("začátek druhýho promisu před druhou smyčkou");
-                                        for(let j = 0; j < 12; j++) {
+                                        for(let j = 0; j < 12; j++) { /*tahle smyčka se renderuje neskutečně dlouho*/
                                             currentPlanner.addImage(months[j], `JPEG`, 0, 0, pageWidth, pageHeight);
                                             console.log("druhý promis");
                                             if(j !== 11) {

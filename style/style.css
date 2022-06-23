@@ -387,7 +387,7 @@ span.polygon {
 
 .preview, .template {
   background-color: white;
-  padding: 20px;
+  padding: 25px 20px 30px 20px;
   color: black;
   position: absolute;
   display: flex;
@@ -409,39 +409,7 @@ span.polygon {
   z-index: 100;
 }
 
-/* .template.month {
-box-shadow: inset 50px 50px orange;
-/* display: none; tohle nemůžu použít, jen z-index
-z-index: -2;
-} */
 
-
-/* .template.month.june {
-  z-index: 100;
-} */
-
-/* 
-#preview {
-  background-color: white;
-  padding: 20px;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  object-fit: cover;
-  font-size: 0.4rem;
-  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
-}
-
-#preview.orientation-landscape {
-  aspect-ratio: 1.4142 / 1; /*pro A4*/
-
-/*
-#preview.orientation-portrait {
-  aspect-ratio: 1 / 1.4142; */
-/* 
-#preview > * {
-  border: solid red 1px;
-} */
 
 .preview h3, .template h3 {
   margin: 0;
@@ -468,16 +436,6 @@ z-index: -2;
   padding-bottom: .5em;
 }
 
-/* .preview__days-of-week-container::after { tohle zase nefunguje pro printscreen, jde to bokem
-content: "";
-position: absolute;
-bottom: -0.4em;
-height: .5em;
-left: 0;
-right: 0;
-background-color: white;
-z-index: 20;
-} */
 
 .preview__days-of-week-container * {
   background-color: var(--color-for-preview);
@@ -485,35 +443,14 @@ z-index: 20;
   display: grid;
   place-items: center;
 }
-/* .serif {
-  font-family: serif; 
-  // a nebo to setnout přes :root a --to změnit přes 
-  js jak u barvy
-}
 
-.sans-serif {
-  font-family: sans-serif;
-} */
 
 .preview__calendar {
   flex: 1 1 60%;
   position: relative;
 }
 
-/* .preview__calendar::after {
-  /*- na zakrytí vnější border u jednotlivých dnů - nefunguje při scale s html2canvas
-  position: absolute;
-  content: "";
-  width: 101%;
-  height: 101%;
-  top: -0.5%;
-  left: -0.5%;
-  border: 5px white solid;
-}   */
-/* 
-#preview.orientation-portrait #calendar::after {
-  border: 4px white solid;
-} */
+
 
 .preview__notes {
   flex: 0 0 20%;
@@ -540,7 +477,7 @@ z-index: 20;
 }
 
 .grid-child {
-  border: solid var(--color-for-preview) 0.2px;
+  border: solid var(--color-for-preview) 0.1px;
   padding: 8%;
 }
 
@@ -589,6 +526,7 @@ z-index: 20;
   cursor: pointer;
   transition: filter 0.5s ease;
 }
+
 
 .img-grid img:hover {
   filter: grayscale(50%);
