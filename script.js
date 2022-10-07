@@ -427,7 +427,7 @@ function generatePlanner(json) {
                         let daysAfter = yearsJS[year][`${monthName}`][3]; //smyčku s vytvořením 
                         //kalendáře až po naplnění těchto variables
                     
-                        if (daysAfter !== "") {
+                        
                             for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
                                 generateNumbers(i, true);
                             }
@@ -439,7 +439,7 @@ function generatePlanner(json) {
                             for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
                             generateNumbers(i, true);
                             }
-                        }
+                        
                     }
 
                             function generateNumbers (i, isGray){
