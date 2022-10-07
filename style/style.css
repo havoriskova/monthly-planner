@@ -425,7 +425,7 @@ span.polygon {
 
 .preview__days-of-week-container {
   flex: 0 0 5%;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   column-gap: 1px;

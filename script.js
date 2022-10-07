@@ -103,15 +103,15 @@ const nameOfMonths = {
             }
 
 const nameOfDaysOfWeek = {
-            czech: ["pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota", "neděle"],
-            dutch: ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"],
-            english: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+            czech: ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"],
+            dutch: ["Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag"],
+            english: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
             }
 
 let previewLook = { 
     
         defaultYear: 2025,
-        defaultColor : "#008800", // value color inputu vyžaduje hexa formát
+        defaultColor : "#614FE8", // value color inputu vyžaduje hexa formát
         defaultOrientation : "portrait",
         defaultFont : "bitter",
         defaultLanguage : "czech",
@@ -133,23 +133,23 @@ let previewLook = {
             if (!e) {
                 selectedYear = previewLook.defaultYear;
                 previewYear.innerText = selectedYear;
-                fetching(true); // = načíst kalendář
+                renderingCal(true); // = načíst kalendář
                 let option = document.querySelector(`option[value="${previewLook.defaultYear}"]`);
                 option.setAttribute("selected", "");
             
             } else {
             selectedYear = parseInt(e.target.value);
             previewYear.innerText = selectedYear;
-            fetching(false); // = znovu načíst kalendář
+            renderingCal(false); // = znovu načíst kalendář
             }
 
 
-            function fetching(isItFirstTime) {
+            function renderingCal(isItFirstTime) {
 
            
-            let daysBefore = yearsJS[`${selectedYear}`].january[1];
-            let days = yearsJS[`${selectedYear}`].january[2];
-            let daysAfter = yearsJS[`${selectedYear}`].january[3];
+            let daysBefore = yearsJS[selectedYear].january[1];
+            let days = yearsJS[selectedYear].january[2];
+            let daysAfter = yearsJS[selectedYear].january[3];
 
             if (!isItFirstTime) {calendar.innerHTML= ``;}
 
@@ -381,8 +381,9 @@ function generatePlanner(json) {
                 cloneMonth = temp.content.cloneNode(true);
                 itemMonth = cloneMonth.querySelector(".template");
                 itemMonth.classList.add("month");
-                itemMonth.classList.add(`${nameOfMonths[i]}`);
-                document.getElementById("preview-orientation").appendChild(cloneMonth);
+                itemMonth.classList.add(`${nameOfMonths["english"][i]}`);
+                document.getElementById("preview-orientation").appendChild(cloneMonth); 
+               // - místo toho je appenduju naráz přes jejich class měsíců ??
 
                 let contentMonthName = itemMonth.querySelector("h3");
                 contentMonthName.textContent = nameOfMonths[this.language][i];
@@ -402,61 +403,65 @@ function generatePlanner(json) {
                 }
 
 
-                // potřebuju přiřadit ke každýmu tempMonth jinej měsíc:
+                // // potřebuju přiřadit ke každýmu tempMonth jinej měsíc - mám přes class ??
 
-                let monthCurrent = document.querySelectorAll(".month")[i];
-                let calendarCurrent = monthCurrent.querySelector(".calendar");
-                console.log(monthCurrent);
+                // let monthCurrent = document.querySelectorAll(".month")[i];
+                let calendarCurrent = itemMonth.querySelector(".calendar");
+                // // console.log(monthCurrent);
                 
            
-             fetchingTwo(this.year, i);
+                renderingCalTwo(this.year, i);
             
-                function fetchingTwo(year, i){
+                    function renderingCalTwo(year, i){
 
-            
-                    let monthName = nameOfMonths["english"][i];
-
-            
-                  //  console.log(year, notes, " funguje!");
-                   
-                  // console.log("zkouška" + i + years[`${selectedYear}`][`${monthName}`][1]); 
-            
-                    let daysBefore = yearsJS[`${year}`][`${monthName}`][1];
-                    let days = yearsJS[`${year}`][`${monthName}`][2];
-                    let daysAfter = yearsJS[`${year}`][`${monthName}`][3];
                 
-
-                        for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
-                            generateNumbers(i, true);
-                        }
-
-                        for(let i = days[0]; i <= days[1]; i++) {
-                            generateNumbers(i, false);
-                        }
-
-                        for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
-                        generateNumbers(i, true);
-                        }
-                }
-
-                        function generateNumbers (i, isGray){
-                        
-                            let day = document.createElement("span");
-                            day.innerHTML = i;
-                            calendarCurrent.appendChild(day);
-                            day.classList.add("grid-child");
-
-                            if(isGray){
-                            day.classList.add("gray-numbers");
-                            } else if(!isGray) {
-                            day.classList.add("changing-color");
+                        let monthName = nameOfMonths["english"][i];
+                        // nebo přes class toho měsíce
+                
+                    //  console.log(year, notes, " funguje!");
+                    
+                    // console.log("zkouška" + i + years[`${selectedYear}`][`${monthName}`][1]); 
+                
+                        let daysBefore = yearsJS[year][`${monthName}`][1];
+                        let days = yearsJS[year][`${monthName}`][2];
+                        let daysAfter = yearsJS[year][`${monthName}`][3]; //smyčku s vytvořením 
+                        //kalendáře až po naplnění těchto variables
+                    
+                        if (daysAfter !== "") {
+                            for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
+                                generateNumbers(i, true);
                             }
-                    
-                        }
 
-                    
-                //*
+                            for(let i = days[0]; i <= days[1]; i++) {
+                                generateNumbers(i, false);
+                            }
+
+                            for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
+                            generateNumbers(i, true);
+                            }
+                        }
+                    }
+
+                            function generateNumbers (i, isGray){
+                            
+                                let day = document.createElement("span");
+                                day.innerHTML = i;
+                                calendarCurrent.appendChild(day);
+                                day.classList.add("grid-child");
+
+                                if(isGray){
+                                day.classList.add("gray-numbers");
+                                } else if(!isGray) {
+                                day.classList.add("changing-color");
+                                }
+
+                        
+                            }
+
+                        
+                    //*
             }
+           
             isCalendarRendered = true;
 
             /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
@@ -488,7 +493,7 @@ function generatePlanner(json) {
                                             if(j == 11) {
                                                 currentPlanner.save(`planner.pdf`);
                                                 /*a nakonec vymazat všechny .template.month kromě preview */
-                                                monthsCurrent.forEach(month => month.remove());
+                                               // monthsCurrent.forEach(month => month.remove());
                                             }
                                         } 
                                     }
@@ -512,8 +517,8 @@ function generatePlanner(json) {
 
                     /***konec zkoušky */
             /****************** konec asynchronního JS, co mi vygeneruje 12stránkový pdf soubor*/
+            }
         }
-    }
     }
 
     let newPlanner = new Planner(...Object.values(json));
