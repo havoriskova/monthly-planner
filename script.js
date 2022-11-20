@@ -15,6 +15,13 @@ function respNav () {
 
 navIcon.addEventListener("click", respNav);
 
+
+let navGenerator = document.querySelector(`[href="#generator"]`);
+let navGallery = document.querySelector(`[href="#gallery"]`);
+
+navGenerator.addEventListener("click", respNav);
+navGallery.addEventListener("click", respNav);
+
 // --------------- konec navigace
 
 //------navigace s eventem na scroll nahoru - že se zobrazí fixed ?
@@ -333,7 +340,7 @@ function generatePlanner(json) {
 
 
             //debugger;
-            console.log(this.year);
+           // console.log(this.year);
 
     
             let pageWidth;
@@ -400,7 +407,7 @@ function generatePlanner(json) {
                     }        
 
                     calendarCurrent.appendChild(day);
-                    console.log(monthName, o); // CHYBA, KDYZ JE V ARRAY JEN JEDNO CISLO !!!!!!
+                    //console.log(monthName, o); // CHYBA, KDYZ JE V ARRAY JEN JEDNO CISLO !!!!!!
                 }
 
 
@@ -419,9 +426,9 @@ function generatePlanner(json) {
                     days = yearsJS[this.year][`${monthName}`][2];
                     daysAfter = yearsJS[this.year][`${monthName}`][3]; //smyčku s vytvořením 
                         //kalendáře až po naplnění těchto variables
-                    console.log(
+                   /* console.log(
                         daysBefore, days, daysAfter, monthName
-                    );
+                    );*/
                     
                         if (daysBefore.length == 1) {
                             generateNumbers(daysBefore[0], true);
@@ -472,12 +479,12 @@ function generatePlanner(json) {
                                 .then(canvas => {
                                     let month__dataURL = canvas.toDataURL("image/png");
                                     months.push(month__dataURL); 
-                                    console.log(months); // divný, že v console je v array rovnou 12 měsíců
+                                  //  console.log(months); // divný, že v console je v array rovnou 12 měsíců
                                     if (months.length == 12) { 
-                                        console.log("začátek druhýho promisu před druhou smyčkou");
+                                       // console.log("začátek druhýho promisu před druhou smyčkou");
                                         for(let j = 0; j < 12; j++) { /*tahle smyčka se renderuje neskutečně dlouho*/
                                             currentPlanner.addImage(months[j], `JPEG`, 0, 0, pageWidth, pageHeight);
-                                            console.log("druhý promis");
+                                            //console.log("druhý promis");
                                             if(j !== 11) {
                                                 currentPlanner.addPage();}
                                             if(j == 11) {
