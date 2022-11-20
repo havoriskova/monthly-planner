@@ -1,3 +1,6 @@
+const loaderTemp = document.querySelector(".loader-template");
+let loader = loaderTemp.content.cloneNode(true);
+
 
 // ---------------- navigace
 
@@ -147,11 +150,11 @@ let previewLook = {
             function renderingCal(isItFirstTime) {
 
            
-            let daysBefore = yearsJS[selectedYear].january[1];
-            let days = yearsJS[selectedYear].january[2];
-            let daysAfter = yearsJS[selectedYear].january[3];
+                let daysBefore = yearsJS[selectedYear].january[1];
+                let days = yearsJS[selectedYear].january[2];
+                let daysAfter = yearsJS[selectedYear].january[3];
 
-            if (!isItFirstTime) {calendar.innerHTML= ``;}
+                if (!isItFirstTime) {calendar.innerHTML= ``;}
 
                 for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
                     generateNumbers(i, true);
@@ -185,24 +188,25 @@ let previewLook = {
 
 
             let language;
-            if (!e) {language = previewLook.defaultLanguage;
-            let lang = document.getElementById(previewLook.defaultLanguage);
-            lang.setAttribute("checked", "");
+            if (!e) {
+                language = previewLook.defaultLanguage;
+                let lang = document.getElementById(previewLook.defaultLanguage);
+                lang.setAttribute("checked", "");
 
             }  else {language = e.path[0].id} // -> string
             
             changeMonth(language);
             changeWeek(language);
 
-                function changeMonth(language) {
+            function changeMonth(language) {
                 previewMonth.innerHTML =  nameOfMonths[language][0]; 
-                }
+            }
 
-                function changeWeek(language) {
+            function changeWeek(language) {
                 for(let i = 0; i < 7; i++) {
                 daysOfWeekPreview[i].innerHTML = nameOfDaysOfWeek[language][i];
                 }
-                }       
+            }       
 
         },
 
@@ -212,7 +216,7 @@ let previewLook = {
                 color.setAttribute("value", `${previewLook.defaultColor}`);
             } else {
                 root.style.setProperty(`--color-for-preview`, e.target.value);
-            color.setAttribute("value", e.target.value)}
+                color.setAttribute("value", e.target.value)}
         },
 
         changeOrientation: function(e) {
@@ -267,7 +271,7 @@ let previewLook = {
             notes.classList.toggle("no-notes");}
         }
 
-        }
+    }
 
 
  //--------------
@@ -290,17 +294,19 @@ formFonts.forEach(font => font.addEventListener("input", previewLook.changeFont)
 
 
 function handleSubmit(e) {
- e.preventDefault();
- //console.log("tadá event objekt" ,  e);
+    e.preventDefault();
+    //console.log("tadá event objekt" ,  e);
+    document.getElementsByTagName("body")[0].appendChild(loader);
+    document.querySelector(".loader-frame").classList.remove("loader-nonactive");
 
-const formEntries = new FormData(generatorForm).entries();
-const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
-// console.log(new FormData(generatorForm)); // objekt, prototyp FormData
-// console.log(formEntries); // objekt, prototype Interator
-// console.log(Array.from(formEntries));
-//console.log("json", json); // objekt, prototype Object
+    const formEntries = new FormData(generatorForm).entries();
+    const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
+    // console.log(new FormData(generatorForm)); // objekt, prototyp FormData
+    // console.log(formEntries); // objekt, prototype Interator
+    // console.log(Array.from(formEntries));
+    //console.log("json", json); // objekt, prototype Object
 
-generatePlanner(json);
+    generatePlanner(json);
 }
 
 generatorForm.addEventListener("submit", handleSubmit);
@@ -324,21 +330,12 @@ function generatePlanner(json) {
         }
 
         createPlanner() {
+
+
+            //debugger;
             console.log(this.year);
 
-            /****************** POKUSY S TEMPLATEM */
-            // let temp, tempItem, tempJanurary, tempFebruary, tempMarch;
-
-            // temp = document.getElementsByTagName("template")[0];
-            // tempItem = temp.content.querySelector("div.template");
-            // console.log(tempItem);
-
-            // tempFebruary = document.importNode(tempItem, true);
-            // tempFebruary.classList.add("month");
-            // document.getElementById("preview-orientation").appendChild(tempFebruary);
-
-            /******************* */
-
+    
             let pageWidth;
             let pageHeight;
 
@@ -352,37 +349,18 @@ function generatePlanner(json) {
 
             document.getElementById("preview-container").style.fontFamily = this.font;
 
-
-            //************ Zkouška, zda-li funguje vše na leden */
-            // let january = document.getElementById("preview");
-            // let renderingOptions = {backgroundColor: "#113", scale:4};
-            
-            // html2canvas(january, renderingOptions).then(canvas => {
-            //           let january__data = canvas.toDataURL("image/png");
-                    
-            //         let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
-            //         currentPlanner.addImage(january__data, `JPEG`, 0, 0, pageWidth, pageHeight);
-            //         currentPlanner.save(`planner.pdf`);
-                
-            // });
-            /**************** konec zkoušky */
-
-            /*************** tady musím nějak vytvořit 12 měsíců divů, co pak hodím do té async smyčky s html2canvas*/
-
-
-            let isCalendarRendered = false;
+            let  temp = document.getElementsByTagName("template")[0];            
 
             for(let i=0; i < 12; i++) {
 
-                let temp, cloneMonth, itemMonth;
-
-                temp = document.getElementsByTagName("template")[0];
+                let cloneMonth, itemMonth;
 
                 cloneMonth = temp.content.cloneNode(true);
                 itemMonth = cloneMonth.querySelector(".template");
                 itemMonth.classList.add("month");
+                // itemMonth.style.scale = `2`; NENI RESENIM, PAC SE MENI RESPONZIVNE
+              //  debugger;
                 itemMonth.classList.add(`${nameOfMonths["english"][i]}`);
-                document.getElementById("preview-orientation").appendChild(cloneMonth); 
                // - místo toho je appenduju naráz přes jejich class měsíců ??
 
                 let contentMonthName = itemMonth.querySelector("h3");
@@ -409,74 +387,86 @@ function generatePlanner(json) {
                 let calendarCurrent = itemMonth.querySelector(".calendar");
                 // // console.log(monthCurrent);
                 
-           
-                renderingCalTwo(this.year, i);
-            
-                    function renderingCalTwo(year, i){
+                function generateNumbers (o, isGray){
+                            
+                    let day = document.createElement("span");
+                    day.innerHTML = o;
+                    day.classList.add("grid-child");
 
+                    if(isGray){
+                    day.classList.add("gray-numbers");
+                    } else if(!isGray) {
+                    day.classList.add("changing-color");
+                    }        
+
+                    calendarCurrent.appendChild(day);
+                    console.log(monthName, o); // CHYBA, KDYZ JE V ARRAY JEN JEDNO CISLO !!!!!!
+                }
+
+
+               
                 
-                        let monthName = nameOfMonths["english"][i];
+                    let monthName = nameOfMonths["english"][i];
                         // nebo přes class toho měsíce
                 
                     //  console.log(year, notes, " funguje!");
                     
                     // console.log("zkouška" + i + years[`${selectedYear}`][`${monthName}`][1]); 
                 
-                        let daysBefore = yearsJS[year][`${monthName}`][1];
-                        let days = yearsJS[year][`${monthName}`][2];
-                        let daysAfter = yearsJS[year][`${monthName}`][3]; //smyčku s vytvořením 
+                    let daysBefore, days, daysAfter;
+
+                    daysBefore = yearsJS[this.year][`${monthName}`][1];
+                    days = yearsJS[this.year][`${monthName}`][2];
+                    daysAfter = yearsJS[this.year][`${monthName}`][3]; //smyčku s vytvořením 
                         //kalendáře až po naplnění těchto variables
+                    console.log(
+                        daysBefore, days, daysAfter, monthName
+                    );
                     
-                        
-                            for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
-                                generateNumbers(i, true);
+                        if (daysBefore.length == 1) {
+                            generateNumbers(daysBefore[0], true);
+                        } else {
+                            for(let j = daysBefore[0]; j <= daysBefore[1]; j++) {
+                                generateNumbers(j, true);
+                                //console.log(monthName, j);
                             }
+                        }
 
-                            for(let i = days[0]; i <= days[1]; i++) {
-                                generateNumbers(i, false);
+                        for(let k = days[0]; k <= days[1]; k++) {
+                                generateNumbers(k, false);
+                        }
+
+                        if (daysAfter.length == 1) {
+                            generateNumbers(daysAfter[0], true)
+                        } else {
+                            for(let m = daysAfter[0]; m <= daysAfter[1]; m++) {
+                                generateNumbers(m, true);
                             }
-
-                            for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
-                            generateNumbers(i, true);
-                            }
+                        }
                         
-                    }
+                
 
-                            function generateNumbers (i, isGray){
-                            
-                                let day = document.createElement("span");
-                                day.innerHTML = i;
-                                calendarCurrent.appendChild(day);
-                                day.classList.add("grid-child");
+            
 
-                                if(isGray){
-                                day.classList.add("gray-numbers");
-                                } else if(!isGray) {
-                                day.classList.add("changing-color");
-                                }
-
-                        
-                            }
-
-                        
+                 document.getElementById("preview-orientation").appendChild(cloneMonth); 
                     //*
             }
            
-            isCalendarRendered = true;
+            
 
             /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
             let months = [];
-            let renderingOptions = {backgroundColor: "#113", scale:4};
+            let renderingOptions = {backgroundColor: "#113", scale:1};
             let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
             
             let monthsCurrent = document.querySelectorAll(".template.month");
 
-            if (monthsCurrent.length === 12 && isCalendarRendered === true) {
+            if (monthsCurrent.length === 12) {
 
                     for(let z = 0; z < 12; z++) {
                         let month = document.querySelectorAll(".month")[z]; // TOHLE MI MÁ DÁT <DIV> - potřebuju teda
                         // dopředu mít hotovejch 12 divů s class .month už v dokumentu
-                        console.log("wtf:   " + month);
+                        //console.log("wtf:   " + month);
 
                         html2canvas(month, renderingOptions)
                                 .then(canvas => {
@@ -491,33 +481,21 @@ function generatePlanner(json) {
                                             if(j !== 11) {
                                                 currentPlanner.addPage();}
                                             if(j == 11) {
+                                                document.querySelector(".loader-frame").classList.add("loader-nonactive");
                                                 currentPlanner.save(`planner.pdf`);
                                                 /*a nakonec vymazat všechny .template.month kromě preview */
-                                               // monthsCurrent.forEach(month => month.remove());
+                                               monthsCurrent.forEach(month => month.remove());
+                                               // a mozna vyresetovat nejaky variables, aby sel stahnout planner hned znovu?
+                                               
                                             }
                                         } 
                                     }
                                 }
                         )
                     }
-
-                    /*** zkouška, proč mi to nefunguje - taky to generuje bez calendáře a innerHTML*/
-                    // let zkouskaMonth = document.querySelector(".february");
-                    //      html2canvas(zkouskaMonth, renderingOptions)
-                    //       .then(canvas => {
-                    //         let month__dataURL = canvas.toDataURL("image/png");
-                    //         let zkouskaPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
-                    //         zkouskaPlanner.addImage(month__dataURL, `JPEG`, 0, 0, pageWidth, pageHeight);
-                    //         console.log("zkouska promis");
-                                   
-                    //         zkouskaPlanner.save(`zkouskaPlanner.pdf`);
-                                
-                        
-                    //      } )
-
-                    /***konec zkoušky */
+            } 
             /****************** konec asynchronního JS, co mi vygeneruje 12stránkový pdf soubor*/
-            }
+            
         }
     }
 
@@ -525,3 +503,26 @@ function generatePlanner(json) {
     //console.log("newPlanner", newPlanner);
     newPlanner.createPlanner(); 
 }
+
+//---------- gallery 
+
+let imagesList = document.querySelectorAll(".img-grid");
+
+
+
+imagesList.forEach((img) => img.addEventListener("click", ()=> {
+    let imgClone = img.cloneNode(true);
+    imgClone.classList.add("imgOnClick");
+    let pseudoEl = document.createElement("div");
+    pseudoEl.classList.add("imgOnClickPseudo");
+    document.body.appendChild(pseudoEl);
+    pseudoEl.appendChild(imgClone);
+    pseudoEl.addEventListener("click", ()=> {
+        imgClone.remove();
+        pseudoEl.remove()})
+}));
+
+
+
+
+//--------- konec gallery

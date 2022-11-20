@@ -1,9 +1,9 @@
 :root {
   --golden: rgb(241, 224, 224);
-  --pattern-size: 50%;
+  --pattern-size: 20%;
   --pattern-white: url("./img/pattern-white-5.png");
   --color-for-preview: black;
-  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ --secondary-color: rgb(32, 32, 32);
 }
 
 /*parallax scrolling by šel i pomocí perspektivy, translateZ scale 
@@ -25,7 +25,7 @@ html {
 
 body {
   margin: 0;
-  background-image: var(--gradient);
+  background-color: var(--secondary-color);
   color: white;
   font-family: "Bitter", serif;
   /* padding-bottom: 3rem; pro footer */
@@ -37,27 +37,22 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  background-color: transparent;
   height: 5rem;
-  color: black;
+  color: var(--secondary-color);
   display: flex;
   justify-content: space-between;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  background-image: var(--pattern-white);
+  background-size: var(--pattern-size);
+  background-attachment: fixed;
+  background-repeat: repeat;
 }
-
-/* header * {
-  border: red solid 1px;
-} */
 
 h1 {
   text-transform: capitalize;
   margin: 0;
   flex-grow: 1;
-  /* background-image: var(--pattern-white);
-  background-size: var(--pattern-size);
-  background-attachment: fixed;
-  background-repeat: repeat; */
-  /* background-color: rgb(200, 200, 200); */
-  background-color: white;
 }
 
 #menu-icon {
@@ -84,20 +79,24 @@ h1 a {
   display: flex;
   align-items: center;
   padding: 0 1rem;
-  color: black;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  background-color: white;
+  color: var(--secondary-color);
+  /* transition: background-color 0.2s ease, color 0.2s ease, background-image 0.2s ease; */
+  background-image: var(--pattern-white);
+  background-size: var(--pattern-size);
+  background-attachment: fixed;
+  background-repeat: repeat;
   font-family: "Special Elite", cursive;
 }
 
 h1 a {
-  background-color: transparent;
-  color: black;
+  color: var(--secondary-color);
   /* text-shadow: 2px 2px 2px black, 0px 0px 2px black; */
 }
+
 nav li a:hover {
-  background-color: transparent;
+  background-color: var(--secondary-color);
   color: white;
+  background-image: none;
 }
 
 aside,
@@ -125,7 +124,7 @@ main {
   background-size: var(--pattern-size);
   background-repeat: repeat;
   background-attachment: fixed;
-  color: black;
+  color: var(--secondary-color);
   position: relative;
   padding-bottom: 100px; /*kvůli tlačítku na form*/
 }
@@ -277,7 +276,7 @@ label.radio-label::before {
 }
 
 input[type="radio"]:checked + label.radio-label::before {
-  background-color: black;
+  background-color: var(--secondary-color);
   border: none;
 }
 /*konec radio*/
@@ -309,14 +308,15 @@ input[type="checkbox"] {
   background-color: gold;
 }
 
-.td-polygon {
+td.td-polygon {
   /*kvůli polygonu*/
   position: relative;
   display: flex;
+  height: 19.2px;
 }
 
 span.polygon {
-  position: relative;
+  position: absolute;
 }
 
 #form-notes:checked ~ .polygon::after {
@@ -326,7 +326,7 @@ span.polygon {
   width: 0.9rem;
   height: 0.9rem;
   content: "";
-  background-color: black;
+  background-color: var(--secondary-color);
   clip-path: polygon(0 30%, 35% 60%, 100% 0, 100% 25%, 35% 85%, 0 55%);
 }
 /*konec checkboxu*/
@@ -334,8 +334,8 @@ span.polygon {
 #submit-button {
   position: relative;
   z-index: 5;
-  background-image: var(--gradient);
-  color: white;
+  background-color: gold;
+  color: var(--secondary-color);
   /* bottom: 40px;
   left: 50%;
   transform: translateX(-50%); */
@@ -349,9 +349,9 @@ span.polygon {
 }
 
 #submit-button:hover {
-  background-color: gold; /*background-image: var(--gradient);*/ 
+  background-color: var(--secondary-color); /*background-image: var(--gradient);*/ 
   background-image: none;
-  color: black;
+  color: white;
 }
 
 #preview-container {
@@ -359,18 +359,14 @@ span.polygon {
   /* background-color: rgba(50 50 50 / 0.2);  */
   position: relative;
 }
-/**/
-
-/* #preview-grid-child {
-  background-color: rgba(200 200 200 / 0.2);
-  display: grid;
-  align-items: center;
-} */
 
 #preview-orientation {
   /* background-color: rgba(200 200 200 / 0.2); */
   position: relative;
   margin: 0 auto; /*pozici absolute dát nemůžu, protože na výšce previewu je závislá výška celého main*/
+  overflow: hidden; /*A ZAROVEN TO POTREBUJU OBEJIT PRO STIN ZA TIMTO ELEMENTEM*/
+  /* border: 1px var(--secondary-color) solid; */
+  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
 }
 
 #preview-orientation.orientation-landscape {
@@ -385,10 +381,12 @@ span.polygon {
   aspect-ratio: 1 / 1.4142;
 }
 
+
+
 .preview, .template {
   background-color: white;
   padding: 25px 20px 30px 20px;
-  color: black;
+  color: var(--secondary-color);
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -405,7 +403,7 @@ span.polygon {
 }
 
 .preview {
-  box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9);
+  /* box-shadow: 5px 5px 10px rgba(0 0 0 / 0.9); nefunguje kvuli overflow hidden */
   z-index: 100;
 }
 
@@ -436,6 +434,9 @@ span.polygon {
   padding-bottom: .5em;
 }
 
+.orientation-landscape .preview__days-of-week-container {
+  flex: 0 0 8%;
+}
 
 .preview__days-of-week-container * {
   background-color: var(--color-for-preview);
@@ -514,36 +515,59 @@ span.polygon {
 }
 
 .img-grid {
-  border: solid red 1px;
+  /* border: solid red 1px; */
   aspect-ratio: 1 / 1;
 }
 
 .img-grid img {
-  border: solid yellow 1px;
+  /* border: solid yellow 1px; */
   width: 100%;
   height: 100%;
   object-fit: cover;
   cursor: pointer;
-  transition: filter 0.5s ease;
+  transition: filter 0.2s ease;
+  filter: grayscale(70%);
 }
 
 
 .img-grid img:hover {
-  filter: grayscale(50%);
-  object-fit: none; /*po optimalizaci fotek by tohle mohlo jít, 
+  filter: grayscale(0%);
+  object-fit: cover; /*po optimalizaci fotek by tohle mohlo jít, 
   prostě by to šlo do své originální šířky*/
   /*+ při rozkliknutí by byl obrázek v popředí přes větší část obrazovky,
   a pozadí blured - přes JS a toggle class .active-img 
   - ale nefunguje pro telefony! */
 }
 
+.imgOnClick img{
+  filter: grayscale(0%);
+  position: fixed;
+  z-index: 500;
+  max-width: 50%;
+  max-height: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: initial;
+}
+
+.imgOnClickPseudo {
+  background-color: rgba(0 0 0 / 0.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 501;
+}
+
 footer {
-  /* background-image: var(--pattern-white);
+  background-image: var(--pattern-white);
   background-size: var(--pattern-size);
   background-repeat: repeat;
-  background-attachment: fixed; */
-  background-color: white;
-  color: black;
+  background-attachment: fixed;
+  /* background-color: white; */
+  color: var(--secondary-color);
   text-align: center;
   height: 3rem;
   padding-top: 1rem;
@@ -551,7 +575,7 @@ footer {
 
 .link-in-text {
   text-decoration: none;
-  color: black;
+  color: var(--secondary-color);
   font-weight: 600;
 }
 
@@ -571,8 +595,19 @@ footer {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  header {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   #preview-orientation.orientation-landscape {
     width: 100%;
+  }
+
+  .imgOnClick img {
+    max-width: 70%;
+    max-height: 90%;
   }
 }
 
@@ -649,7 +684,7 @@ footer {
   }
 
   nav ul li a:hover {
-    background-color: black;
+    background-color: var(--secondary-color);
   }
 
   main {
@@ -683,6 +718,11 @@ footer {
   #preview-orientation.orientation-portrait {
     width: 50%;
   }
+
+  .imgOnClick img {
+    max-width: 70%;
+    max-height: 80%;
+  }
 }
 
 @media (max-width: 650px) {
@@ -699,14 +739,246 @@ footer {
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 565px) {
+
+  .img-grid {
+    pointer-events: none;
+  }
+
+  .img-grid img {
+    filter: none;
+  }
+
   .img-grid img:hover {
     cursor: inherit;
-    filter: none;
-    object-fit: cover;
   }
 
   form {
     font-size: 0.75rem;
   }
+}
+
+
+/* hodnoty pro pdf A4 natvrdo v mm a procentech: */
+
+.orientation-landscape .month {
+  width: 297mm;
+  height: 210mm;
+}
+
+.orientation-portrait .month {
+  height: 297mm;
+  width: 210mm;
+}
+
+.month {
+  /* background-color: pink; */
+  font-size: 1rem;
+  padding: 3rem 3rem 4rem 3rem;
+  z-index: -1;
+  /*display: none; MUSI JIT VIDET, JINAK SE PRINTSCREEN NEUDELA*/
+  position:absolute;
+  right: -400%;
+}
+
+.month .preview__days-of-week-container * {
+  font-size: 1rem;
+}
+
+
+
+/* LOADER */
+
+.loader-nonactive {
+  display: none;
+}
+
+.loader-frame {
+  z-index:300;
+  --ball-color: #CCF6C8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+	overflow: hidden;
+  background: #34626C;
+  opacity: .9;
+	font-family: 'Open Sans', Helvetica, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	filter: contrast(6) hue-rotate(120deg);
+}
+
+.loader-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.ball {
+	background: #fff;
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
+	filter: blur(5px);
+}
+
+.ball, .moving-big::after, .moving-small::after {
+	background: var(--ball-color) !important;
+
+}
+
+.moving-big, .moving-small {
+border-color: transparent !important; }
+
+.moving-big { /*tohle je to malý čtverec, kolem kterého se bude točit velkej ::after pseudo efekt*/
+	z-index: 3;
+	width: 10px;
+	height: 10px;
+	background: trasparent;
+	position: absolute;
+	border-width: 5px;
+	border-style: solid;
+	border-color: green purple green purple;
+	top: 30px;
+	left: 30px;
+	animation: rotate-forever 4s linear infinite;
+	/*díky linear se to nepauzne po dodělání kolečka */
+}
+
+@keyframes rotate-forever {
+	from {transform: rotate(0)}
+	to {transform: rotate(360deg)}
+}
+
+@keyframes rotate-forever-backwards {
+	from {transform: rotate(0)}
+	to {transform: rotate(-360deg)}
+}
+
+.moving-big:nth-of-type(2) {
+	left: 45px;
+	top: 35px;
+	animation-delay: 1.2s;
+	
+}
+
+.moving-big:nth-of-type(3) {
+	left: 30px;
+	top: 51px;
+	animation-delay: 0.5s;
+	animation: rotate-forever-backwards 4s linear infinite; 
+}
+.moving-big::after {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: yellow;
+	content: "";
+	top: 0;
+	left: 0;
+	filter: blur(7px);
+}
+
+.moving-small { /*velký čtverec, kolem kterýho se bude otáčet malý ::after kolečko*/
+	width: 100px;
+	height: 100px;
+	background: transparent;
+	position: absolute;
+	border-color: green purple green purple;
+	border-style: solid;
+	border-width: 5px;
+	animation: rotate-forever 4s linear infinite; 
+}
+
+.moving-small:nth-of-type(5) {
+	top: -20px;
+	left: -30px;
+	animation-delay: 2.5s;
+	animation-duration: 3s;
+}
+
+.moving-small:nth-of-type(6) {
+	top: 40px;
+	left: -50px;
+	animation-delay: .7s;
+}
+
+.moving-small:nth-of-type(7) {
+	top: 70px;
+	left: 20px;
+	animation-delay: 1.4s;
+}
+
+.moving-small:nth-of-type(8) {
+	top: -20px;
+	left: 70px;
+	width: 130px;
+	animation-delay: .3s;
+	animation: rotate-forever-backwards 4s linear infinite;
+}
+
+.moving-small:nth-of-type(9) {
+	top: -80px;
+	left: 40px;
+	width: 130px;  
+animation-delay: .4s;
+}
+
+.moving-small:nth-of-type(10) {
+	top: -80px;
+	left: -60px;
+	height: 140px;
+}
+
+.moving-small:nth-of-type(11) {
+	top: 30px;
+	width: 200px;
+		animation: rotate-forever-backwards 3.5s linear infinite;
+}
+
+
+.moving-small::after {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background: yellow;
+	content: "";
+	border-radius: 50%;
+	filter: blur(3px);
+}
+
+.moving-small:nth-of-type(5)::after {
+	width: 15px;
+	height: 15px;
+	bottom: 0;
+	right: 0;
+}
+.moving-small:nth-of-type(6)::after {
+	width: 15px;
+	height: 15px;
+	right: 0;
+}
+
+.moving-small:nth-of-type(8)::after {
+	width: 30px;
+	height: 30px;
+	bottom: 0;
+	left: -10px;
+}
+
+.moving-small:nth-of-type(9)::after {
+	width: 20px;
+	height: 20px;
+	bottom: 0;
+}
+
+.moving-small:nth-of-type(10)::after {
+	width: 15px;
+	height: 15px;
+	bottom: 0;
+	right: 0;
 }
