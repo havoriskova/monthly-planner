@@ -778,7 +778,7 @@ footer {
   z-index: -1;
   /*display: none; MUSI JIT VIDET, JINAK SE PRINTSCREEN NEUDELA*/
   position:absolute;
-  right: -400%;
+  /* right: -400%; */
 }
 
 .month .preview__days-of-week-container * {
