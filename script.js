@@ -118,6 +118,12 @@ const nameOfDaysOfWeek = {
             english: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
             }
 
+const nameOfNotes = {
+            czech: "Poznámky",
+            dutch: "Notities",
+            english: "Notes"
+            }
+
 let previewLook = { 
     
         defaultYear: 2025,
@@ -200,10 +206,14 @@ let previewLook = {
                 let lang = document.getElementById(previewLook.defaultLanguage);
                 lang.setAttribute("checked", "");
 
-            }  else {language = e.path[0].id} // -> string
+            }  else {
+               // language = e.path[0].id; - nefungovalo pro firefox
+            language = e.target.id} // -> string
             
             changeMonth(language);
             changeWeek(language);
+
+            changeNotesLang(language);
 
             function changeMonth(language) {
                 previewMonth.innerHTML =  nameOfMonths[language][0]; 
@@ -213,7 +223,12 @@ let previewLook = {
                 for(let i = 0; i < 7; i++) {
                 daysOfWeekPreview[i].innerHTML = nameOfDaysOfWeek[language][i];
                 }
-            }       
+            }   
+            
+            function changeNotesLang(language) {
+
+                notes.innerHTML = `${nameOfNotes[language]}:`;
+            }
 
         },
 
@@ -287,11 +302,11 @@ let previewLook = {
 previewLook.setDefaultForm(); // ten zahrnuje všechny initial calls
 
 formYear.addEventListener("input", previewLook.changeYear);
-formLanguages.forEach(formLang => formLang.addEventListener("input", previewLook.changeLanguage));
-orientationForm.forEach(orient => orient.addEventListener("input", previewLook.changeOrientation));
+formLanguages.forEach((formLang) => {formLang.addEventListener("input", previewLook.changeLanguage)});
+orientationForm.forEach((orient) => {orient.addEventListener("input", previewLook.changeOrientation)});
 color.addEventListener("input", previewLook.changeColor);
 formNotes.addEventListener("input", previewLook.changeNotes);
-formFonts.forEach(font => font.addEventListener("input", previewLook.changeFont));
+formFonts.forEach((font) => {font.addEventListener("input", previewLook.changeFont)});
 
 
 // ---------------- konec
