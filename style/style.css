@@ -349,7 +349,7 @@ span.polygon {
 }
 
 #submit-button:hover {
-  background-color: var(--secondary-color); /*background-image: var(--gradient);*/ 
+  background-color: var(--color-for-preview); /*background-image: var(--gradient);*/ 
   background-image: none;
   color: white;
 }
