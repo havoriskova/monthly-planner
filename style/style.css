@@ -32,6 +32,21 @@ body {
   position: relative;
 }
 
+.alertForPhones {
+ display: none; /*grid*/
+ position: absolute;
+ inset: 0;
+ background-color: rgba(0 0 0 / 0.5);
+ place-items: center;
+}
+
+.alertForPhones {
+  width: 80%;
+  height: 50%;
+  padding: 10%;
+  text-align: center;
+}
+
 header {
   position: absolute;
   top: 0;

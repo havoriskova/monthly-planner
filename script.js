@@ -317,6 +317,17 @@ formFonts.forEach((font) => {font.addEventListener("input", previewLook.changeFo
 
 function handleSubmit(e) {
     e.preventDefault();
+
+    // submit only for PC, not for phones (it is taking too long for phones to generate the planner): 
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        let alert = document.querySelector('#alertForPhones');
+        alert.style.display = 'grid';
+        alert.addEventListener('click', () => alert.style.display = 'none');
+        return
+      }
+
+
     //console.log("tadá event objekt" ,  e);
     document.getElementsByTagName("body")[0].appendChild(loader);
     document.querySelector(".loader-frame").classList.remove("loader-nonactive");
@@ -330,6 +341,8 @@ function handleSubmit(e) {
 
     generatePlanner(json);
 }
+
+
 
 generatorForm.addEventListener("submit", handleSubmit);
 
@@ -544,7 +557,29 @@ imagesList.forEach((img) => img.addEventListener("click", ()=> {
         pseudoEl.remove()})
 }));
 
+// misto tohoto muzu mit element active-gallery-container, co bude na body, absolute position atd + defaultne display none / hidden
+// Bude mit v sobe vsechny img i tlacitka, a 
+// podle toho, co rozkliknes, tak se zmeni src img na ten aktivni src.
+// pokud kliknes pak na cokoliv jineho nez na img, sipky, tak pujde active-gallery-container zpatky na display none
 
 
 
 //--------- konec gallery
+
+
+// --------- color picker - 
+
+// mit barvy v hsl formatu -> and then transport into hexa format. Protoze Notes mas taky v ty barve, takze to chces mit jen tmave, mozna do pastelova
+// nebo mit vlastni color picker slozeny jen z hezkych pastelovych tmavsich barev
+// 
+
+// --------- konec color picker
+
+{/* fldssof jfodsfjdsfpjds sjdsfoj */}
+
+// submit only for PC :
+
+
+
+
+//
