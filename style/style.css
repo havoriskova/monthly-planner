@@ -36,16 +36,50 @@ body {
  display: none; /*grid*/
  position: absolute;
  inset: 0;
- background-color: rgba(0 0 0 / 0.5);
+ background-color: rgba(0 0 0 / 0.6);
  place-items: center;
  z-index: 10000;
 }
 
-.alertForPhones {
+.alertForPhonesMessage {
   width: 80%;
-  height: 50%;
+  height: 50vh;
   padding: 10%;
+  border-radius: 5px;
   text-align: center;
+  background-color: white;
+  color: black;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.alertForPhonesMessage button {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  border: none;
+  background-color: transparent;
+}
+
+.alertForPhonesMessage button::before {
+  content: "";
+  position: absolute;
+  background-color: #000;
+  border-radius: 4px;
+  width: 35px;
+  height: 6px;;
+  transform: rotate(45deg);
+}
+
+.alertForPhonesMessage button::after {
+  content: "";
+  position: absolute;
+  background-color: #000;
+  border-radius: 4px;
+  width: 35px;
+  height: 6px;
+  transform: rotate(-45deg);
 }
 
 header {
