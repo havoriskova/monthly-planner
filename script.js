@@ -576,10 +576,3 @@ imagesList.forEach((img) => img.addEventListener("click", ()=> {
 // --------- konec color picker
 
 {/* fldssof jfodsfjdsfpjds sjdsfoj */}
-
-// submit only for PC :
-
-
-
-
-//
