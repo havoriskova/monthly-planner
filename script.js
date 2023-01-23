@@ -570,7 +570,7 @@ imagesList.forEach((img) => img.addEventListener("click", ()=> {
 // --------- color picker - 
 
 // mit barvy v hsl formatu -> and then transport into hexa format. Protoze Notes mas taky v ty barve, takze to chces mit jen tmave, mozna do pastelova
-// nebo mit vlastni color picker slozeny jen z hezkych pastelovych tmavsich barev
+// nebo mit vlastni color picker slozeny jen z hezkych pastelovych tmavsich barev na <canvas>
 // 
 
 // --------- konec color picker
