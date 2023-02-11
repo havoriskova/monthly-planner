@@ -262,7 +262,8 @@ table tr:nth-of-type(6) input {
 }
 
 #generator-form select[name="year"],
-#generator-form input[type="color"] {
+#generator-form input[type="color"],
+#generator-form select[name='month'] {
   width: 100%;
   text-align: center;
   height: 2rem;
@@ -270,6 +271,10 @@ table tr:nth-of-type(6) input {
 
 #generator-form select[name="year"] {
   background-color: white;
+}
+
+#generator-form select[name='month'] {
+  border: solid 1px rgba(0 0 0 / 0.5);
 }
 
 #generator-form input[type="color"] {
