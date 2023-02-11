@@ -151,7 +151,7 @@ let previewLook = {
         },
 
 
-        changeYear: function(e) {
+        changeYear(e) {
             let selectedYear; 
 
             if (!e) {
@@ -166,7 +166,7 @@ let previewLook = {
             selectedYear = parseInt(e.target.value);
             previewYear.innerText = selectedYear;
             buttonYearText.innerText = selectedYear;
-            this.year = selectedYear;
+            previewLook.year = selectedYear;
             renderingCal(false); // = znovu načíst kalendář
             }
 
@@ -174,9 +174,10 @@ let previewLook = {
             function renderingCal(isItFirstTime) {
 
            
-                let daysBefore = yearsJS[selectedYear].january[1];
-                let days = yearsJS[selectedYear].january[2]; // potrebuju to nejak s this.year a this.month :/
-                let daysAfter = yearsJS[selectedYear].january[3];
+                let daysBefore = yearsJS[previewLook.year][previewLook.month][1];
+                //console.log(previewLook.year, previewLook.month, daysBefore);
+                let days = yearsJS[previewLook.year][previewLook.month][2]; // potrebuju to nejak s this.year a this.month :/
+                let daysAfter = yearsJS[previewLook.year][previewLook.month][3];
 
                 if (!isItFirstTime) {calendar.innerHTML= ``;}
 
@@ -208,7 +209,7 @@ let previewLook = {
             }
         },
 
-        changeMonth: function(e) {
+        changeMonth(e) {
             let selectedMonth; 
 
             if (!e) {
@@ -223,7 +224,7 @@ let previewLook = {
             selectedMonth = e.target.value;
             previewMonth.innerText = selectedMonth;
             buttonMonthText.innerText = selectedMonth;
-            this.month = selectedMonth;
+            previewLook.month = selectedMonth;
             // renderingCal(false); // = znovu načíst kalendář
             }
 
@@ -248,7 +249,7 @@ let previewLook = {
             changeNotesLang(language);
 
             function changeMonth(language) {
-                previewMonth.innerHTML =  nameOfMonths[language][0]; 
+                previewMonth.innerHTML =  nameOfMonths[language][0]; // 
             }
 
             function changeWeek(language) {
