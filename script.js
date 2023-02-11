@@ -95,6 +95,7 @@ const preview = document.querySelector("template"); /* ono to bere jen první .p
 const generatorForm = document.getElementById("generator-form");
 const calendar = document.querySelector(".preview__calendar");
 const formYear = document.getElementById("form-year");
+const formMonth = document.getElementById("form-month");
 let previewYear = document.querySelector(".preview__name-of-year");
 let orientationForm = document.querySelectorAll(`input[name="orientation"]`);
 const previewOrientation = document.querySelector("#preview-orientation");
@@ -105,6 +106,8 @@ const color = document.getElementById("input-color");
 const formNotes = document.getElementById("form-notes");
 const notes = document.querySelector(".preview__notes");
 const formFonts = document.querySelectorAll(`input[name="font"]`);
+const buttonYearText = document.querySelector("#button-year");
+const buttonMonthText = document.querySelector("#button-month");
 
 const nameOfMonths = {
             czech: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"] ,
@@ -127,15 +130,20 @@ const nameOfNotes = {
 let previewLook = { 
     
         defaultYear: 2025,
+        defaultMonth: "february",
         defaultColor : "#614FE8", // value color inputu vyžaduje hexa formát
         defaultOrientation : "portrait",
         defaultFont : "bitter",
         defaultLanguage : "czech",
         defaultNotes : "on",
 
+        year: 2025,
+        month: "february",
+
         setDefaultForm: function() {
             this.changeLanguage();
             this.changeYear();
+            this.changeMonth();
             this.changeColor();
             this.changeNotes();
             this.changeFont();
@@ -149,6 +157,7 @@ let previewLook = {
             if (!e) {
                 selectedYear = previewLook.defaultYear;
                 previewYear.innerText = selectedYear;
+                buttonYearText.innerText = selectedYear;
                 renderingCal(true); // = načíst kalendář
                 let option = document.querySelector(`option[value="${previewLook.defaultYear}"]`);
                 option.setAttribute("selected", "");
@@ -156,6 +165,8 @@ let previewLook = {
             } else {
             selectedYear = parseInt(e.target.value);
             previewYear.innerText = selectedYear;
+            buttonYearText.innerText = selectedYear;
+            this.year = selectedYear;
             renderingCal(false); // = znovu načíst kalendář
             }
 
@@ -164,7 +175,7 @@ let previewLook = {
 
            
                 let daysBefore = yearsJS[selectedYear].january[1];
-                let days = yearsJS[selectedYear].january[2];
+                let days = yearsJS[selectedYear].january[2]; // potrebuju to nejak s this.year a this.month :/
                 let daysAfter = yearsJS[selectedYear].january[3];
 
                 if (!isItFirstTime) {calendar.innerHTML= ``;}
@@ -195,6 +206,27 @@ let previewLook = {
                     day.classList.add("changing-color");
                     }
             }
+        },
+
+        changeMonth: function(e) {
+            let selectedMonth; 
+
+            if (!e) {
+                selectedMonth = previewLook.defaultMonth;
+                previewMonth.innerText = selectedMonth;
+                buttonMonthText.innerText = selectedMonth;
+                // renderingCal(true); // = načíst kalendář
+                let option = document.querySelector(`option[value="${previewLook.defaultMonth}"]`);
+                option.setAttribute("selected", "");
+            
+            } else {
+            selectedMonth = e.target.value;
+            previewMonth.innerText = selectedMonth;
+            buttonMonthText.innerText = selectedMonth;
+            this.month = selectedMonth;
+            // renderingCal(false); // = znovu načíst kalendář
+            }
+
         },
 
         changeLanguage: function(e) {
@@ -302,6 +334,7 @@ let previewLook = {
 previewLook.setDefaultForm(); // ten zahrnuje všechny initial calls
 
 formYear.addEventListener("input", previewLook.changeYear);
+formMonth.addEventListener("input", previewLook.changeMonth);
 formLanguages.forEach((formLang) => {formLang.addEventListener("input", previewLook.changeLanguage)});
 orientationForm.forEach((orient) => {orient.addEventListener("input", previewLook.changeOrientation)});
 color.addEventListener("input", previewLook.changeColor);
@@ -355,8 +388,9 @@ function generatePlanner(json) {
 
 
     class Planner { // na pořadí u constructoru záleží
-        constructor(year, color, orientation, font, language, notes) {
+        constructor(year, month, color, orientation, language, font, notes) {
             this.year = year;
+            this.month = month;
             this.color = color;
             this.orientation = orientation;
             this.font = font;
@@ -535,7 +569,7 @@ function generatePlanner(json) {
     }
 
     let newPlanner = new Planner(...Object.values(json));
-    //console.log("newPlanner", newPlanner);
+    console.log("newPlanner", newPlanner);
     newPlanner.createPlanner(); 
 }
 

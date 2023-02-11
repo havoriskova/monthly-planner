@@ -126,7 +126,7 @@
 
             <tr>
               <th><span>orientation:</span></th>
-              <td>
+              <td class="td-orientation">
                 <input
                   type="radio"
                   id="landscape"
@@ -139,30 +139,6 @@
                   value="portrait"
                   name="orientation"
                 /><label for="portrait" class="radio-label">portrait</label>
-              </td>
-            </tr>
-
-            <tr>
-              <th><span>font:</span></th>
-              <td class="td-font">
-                <input
-                  type="radio"
-                  id="bitter"
-                  value="bitter"
-                  name="font"
-                /><label for="bitter" class="radio-label">bitter</label>
-                <input
-                  type="radio"
-                  id="serif"
-                  value="serif"
-                  name="font"
-                /><label for="serif" class="radio-label">serif</label>
-                <input
-                  type="radio"
-                  id="sans-serif"
-                  value="sans-serif"
-                  name="font"
-                /><label for="sans-serif" class="radio-label">sans serif</label>
               </td>
             </tr>
 
@@ -187,6 +163,30 @@
                   value="dutch"
                   name="language"
                 /><label for="dutch" class="radio-label">dutch</label>
+              </td>
+            </tr>
+
+            <tr>
+              <th><span>font:</span></th>
+              <td class="td-font">
+                <input
+                  type="radio"
+                  id="bitter"
+                  value="bitter"
+                  name="font"
+                /><label for="bitter" class="radio-label">bitter</label>
+                <input
+                  type="radio"
+                  id="serif"
+                  value="serif"
+                  name="font"
+                /><label for="serif" class="radio-label">serif</label>
+                <input
+                  type="radio"
+                  id="sans-serif"
+                  value="sans-serif"
+                  name="font"
+                /><label for="sans-serif" class="radio-label">sans serif</label>
               </td>
             </tr>
 
@@ -237,9 +237,15 @@
         </section>
       </section>
       <!-- </div> -->
-      <button id="submit-button" form="generator-form">
-        Download your planner
-      </button>
+      <div class="container-submit-buttons">
+        <button id="submit-button" form="generator-form" class="submit-button">
+          Download your planner for <span id="button-year">the whole year</span>
+        </button>
+        <button id="submit-month-button" class="submit-button">
+          Download your planner for <span id="button-month">1 month</span>
+        </button>
+
+      </div>
     </main>
 
     <aside id="gallery">

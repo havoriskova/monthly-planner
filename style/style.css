@@ -328,7 +328,7 @@ label.radio-label::before {
   box-shadow: 0 0 1px 2px white;
 }
 
-.td-font label.radio-label::before {
+.td-font label.radio-label::before, .td-orientation label.radio-label::before {
   border-color: white;
   box-shadow: 0 0 1px 2px gold;
 }
@@ -355,15 +355,15 @@ input[type="checkbox"] {
   /* left: 0.9rem;
   top: 1rem; */
   content: "";
-  border: 3px solid gold;
+  border: 3px solid white;
   border-radius: 0.2rem;
-  background-color: transparent;
+  background-color: white;
   width: 1rem;
   height: 1rem;
 }
 
 #form-notes:checked ~ .polygon::before {
-  background-color: gold;
+  background-color: white;
 }
 
 td.td-polygon {
@@ -389,24 +389,35 @@ span.polygon {
 }
 /*konec checkboxu*/
 
-#submit-button {
+.container-submit-buttons {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  bottom: -90px;
+  display: flex;
+  justify-content: center;
+  gap: 2%;
+}
+
+.submit-button {
   position: relative;
   z-index: 5;
   background-color: gold;
+  padding: 10px 40px;
   color: var(--secondary-color);
   /* bottom: 40px;
   left: 50%;
   transform: translateX(-50%); */
-  display: block;
-  margin: 0 auto;
-  bottom: -90px;
-  padding: 10px 40px;
   font-family: "Bitter", serif;
   border: none;
   cursor: pointer;
 }
 
-#submit-button:hover {
+#button-month {
+  text-transform: capitalize;
+}
+
+.submit-button:hover {
   background-color: var(--color-for-preview); /*background-image: var(--gradient);*/ 
   background-image: none;
   color: white;
@@ -774,7 +785,7 @@ footer {
   }
 
 
-  #submit-button {
+  .container-submit-buttons {
     bottom: -50px;
   }
 
@@ -846,6 +857,11 @@ footer {
   form {
     font-size: 0.75rem;
   }
+
+  #submit-button {
+    display: none;
+  }
+
 }
 
 
@@ -874,6 +890,10 @@ footer {
 .month .preview__days-of-week-container * {
   font-size: 1rem;
 }
+
+
+
+
 
 
 
