@@ -212,10 +212,14 @@ let previewLook = {
 
         changeMonth(e) {
             let selectedMonth; 
+            
 
             if (!e) {
                 selectedMonth = previewLook.defaultMonth;
-                previewMonth.innerText = selectedMonth;
+                // console.log(previewLook.language);
+                // console.log(nameOfMonths.english.indexOf(selectedMonth));
+                // console.log(nameOfMonths[previewLook.language][nameOfMonths.english.indexOf(selectedMonth)]);
+                previewMonth.innerText = nameOfMonths[previewLook.language][nameOfMonths.english.indexOf(selectedMonth)];
                 buttonMonthText.innerText = selectedMonth;
                 // renderingCal(true); // = načíst kalendář
                 let option = document.querySelector(`option[value="${previewLook.defaultMonth}"]`);
@@ -223,7 +227,7 @@ let previewLook = {
             
             } else {
             selectedMonth = e.target.value;
-            previewMonth.innerText = selectedMonth;
+            previewMonth.innerText = nameOfMonths[previewLook.language][nameOfMonths.english.indexOf(selectedMonth)];
             buttonMonthText.innerText = selectedMonth;
             previewLook.month = selectedMonth;
             // renderingCal(false); // = znovu načíst kalendář
@@ -242,7 +246,8 @@ let previewLook = {
 
             }  else {
                // language = e.path[0].id; - nefungovalo pro firefox
-                language = e.target.id
+                language = e.target.id;
+                previewLook.language = language;
             } // -> string
             
             changeMonth(language);
