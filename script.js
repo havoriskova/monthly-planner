@@ -447,7 +447,7 @@ function handleSubmit(e) {
     if (e.submitter.id === "submit-button" ) {
         generatePlanner(json); 
     } else {
-        generateMonthPlanner(json)
+        generateMonthPlanner(json);
     }
 }
 
@@ -645,24 +645,20 @@ function generatePlanner(json) {
     }
 
     let newPlanner = new Planner(...Object.values(json));
-    console.log("newPlanner", newPlanner);
+    //console.log("newPlanner", newPlanner);
     newPlanner.createPlanner(); 
 }
 
 
-// --------- Month planner click event ----------------
+// --------- Month planner ----------------
 
-function generateMonthPlanner(e) {
-    console.log(e);
+function generateMonthPlanner(json) {
+  
 
-    // monthPlanner.createPlanner();
-
-
-
-    class monthPlanner { // na pořadí u constructoru záleží
+    class MonthPlanner { // na pořadí u constructoru záleží
         constructor(year, month, color, orientation, language, font, notes) {
-            this.year = previewLook.year;
-            this.month = previewLook.month;
+            this.year = year;
+            this.month = month;
             this.color = color;
             this.orientation = orientation;
             this.font = font;
@@ -685,7 +681,7 @@ function generateMonthPlanner(e) {
 
             document.getElementById("preview-container").style.fontFamily = this.font;
 
-            let  temp = document.getElementsByTagName("template")[0];            
+            let temp = document.getElementsByTagName("template")[0];            
 
            
 
@@ -696,11 +692,11 @@ function generateMonthPlanner(e) {
                 itemMonth.classList.add("month");
                 // itemMonth.style.scale = `2`; NENI RESENIM, PAC SE MENI RESPONZIVNE
               //  debugger;
-                itemMonth.classList.add(`${nameOfMonths["english"][i]}`);
+                itemMonth.classList.add(`${nameOfMonths["english"][0]}`);
                // - místo toho je appenduju naráz přes jejich class měsíců ??
 
                 let contentMonthName = itemMonth.querySelector("h3");
-                contentMonthName.textContent = nameOfMonths[this.language][i];
+                contentMonthName.textContent = nameOfMonths[this.language][0];
 
                 let contentYear = itemMonth.querySelector(".name-of-year");
                 contentYear.textContent = this.year;
@@ -742,7 +738,7 @@ function generateMonthPlanner(e) {
 
                
                 
-                    let monthName = nameOfMonths["english"][i];
+                    let monthName = nameOfMonths["english"][0];
                         // nebo přes class toho měsíce
                 
                     //  console.log(year, notes, " funguje!");
@@ -799,7 +795,7 @@ function generateMonthPlanner(e) {
 
             
 
-            let month = document.querySelectorAll(".month")[z]; // TOHLE MI MÁ DÁT <DIV> - potřebuju teda
+            let month = document.querySelectorAll(".month")[0]; // TOHLE MI MÁ DÁT <DIV> - potřebuju teda
                       
                         //console.log("wtf:   " + month);
 
@@ -833,7 +829,8 @@ function generateMonthPlanner(e) {
             
         }
         
-    
+    let newPlanner = new MonthPlanner(...Object.values(json));
+    newPlanner.createPlanner();
     
   //  const monthPlanner;
 
