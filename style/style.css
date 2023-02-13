@@ -226,6 +226,7 @@ main {
 
 #generator-form p {
   padding: 1rem 0;
+  line-height: 1.5rem;
 }
 
 table {
@@ -866,7 +867,7 @@ footer {
   #about p {
     font-size: 14px;
   }
-  
+
   .preview {
     font-size: 0.45rem;
   }
