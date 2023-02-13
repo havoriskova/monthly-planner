@@ -82,6 +82,7 @@
             of January:
           </p>
           <table>
+
             <tr>
               <th><label for="form-year">year:</label></th>
               <td>
@@ -95,6 +96,27 @@
             </tr>
 
             <tr>
+              <th><label for="form-month">month:</label></th>
+              <td>
+                <select name="month" id="form-month">
+                  <option value="january">january</option>
+                  <option value="february">february</option>
+                  <option value="march">march</option>
+                  <option value="april">april</option>
+                  <option value="may">may</option>
+                  <option value="june">june</option>
+                  <option value="july">july</option>
+                  <option value="august">august</option>
+                  <option value="september">september</option>
+                  <option value="october">october</option>
+                  <option value="november">november</option>
+                  <option value="december">december</option>
+                </select>
+              </td>
+            </tr>
+
+
+            <tr>
               <th><label for="input-color">color: </label></th>
               <td>
                 <input type="color" name="color" id="input-color" />
@@ -104,7 +126,7 @@
 
             <tr>
               <th><span>orientation:</span></th>
-              <td>
+              <td class="td-orientation">
                 <input
                   type="radio"
                   id="landscape"
@@ -117,30 +139,6 @@
                   value="portrait"
                   name="orientation"
                 /><label for="portrait" class="radio-label">portrait</label>
-              </td>
-            </tr>
-
-            <tr>
-              <th><span>font:</span></th>
-              <td class="td-font">
-                <input
-                  type="radio"
-                  id="bitter"
-                  value="bitter"
-                  name="font"
-                /><label for="bitter" class="radio-label">bitter</label>
-                <input
-                  type="radio"
-                  id="serif"
-                  value="serif"
-                  name="font"
-                /><label for="serif" class="radio-label">serif</label>
-                <input
-                  type="radio"
-                  id="sans-serif"
-                  value="sans-serif"
-                  name="font"
-                /><label for="sans-serif" class="radio-label">sans serif</label>
               </td>
             </tr>
 
@@ -165,6 +163,30 @@
                   value="dutch"
                   name="language"
                 /><label for="dutch" class="radio-label">dutch</label>
+              </td>
+            </tr>
+
+            <tr>
+              <th><span>font:</span></th>
+              <td class="td-font">
+                <input
+                  type="radio"
+                  id="bitter"
+                  value="bitter"
+                  name="font"
+                /><label for="bitter" class="radio-label">bitter</label>
+                <input
+                  type="radio"
+                  id="serif"
+                  value="serif"
+                  name="font"
+                /><label for="serif" class="radio-label">serif</label>
+                <input
+                  type="radio"
+                  id="sans-serif"
+                  value="sans-serif"
+                  name="font"
+                /><label for="sans-serif" class="radio-label">sans serif</label>
               </td>
             </tr>
 
@@ -215,9 +237,15 @@
         </section>
       </section>
       <!-- </div> -->
-      <button id="submit-button" form="generator-form">
-        Download your planner
-      </button>
+      <div class="container-submit-buttons">
+        <button id="submit-button" name="submit-button" form="generator-form" class="submit-button">
+          Download your planner for <span id="button-year">the whole year</span>
+        </button>
+        <button id="submit-month-button" class="submit-button" form="generator-form">
+          Download your planner for <span id="button-month">1 month</span>
+        </button>
+
+      </div>
     </main>
 
     <aside id="gallery">

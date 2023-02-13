@@ -95,6 +95,7 @@ const preview = document.querySelector("template"); /* ono to bere jen první .p
 const generatorForm = document.getElementById("generator-form");
 const calendar = document.querySelector(".preview__calendar");
 const formYear = document.getElementById("form-year");
+const formMonth = document.getElementById("form-month");
 let previewYear = document.querySelector(".preview__name-of-year");
 let orientationForm = document.querySelectorAll(`input[name="orientation"]`);
 const previewOrientation = document.querySelector("#preview-orientation");
@@ -105,6 +106,9 @@ const color = document.getElementById("input-color");
 const formNotes = document.getElementById("form-notes");
 const notes = document.querySelector(".preview__notes");
 const formFonts = document.querySelectorAll(`input[name="font"]`);
+const buttonYearText = document.querySelector("#button-year");
+const buttonMonthText = document.querySelector("#button-month");
+const submitMonthButton = document.querySelector("#submit-month-button");
 
 const nameOfMonths = {
             czech: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"] ,
@@ -127,15 +131,22 @@ const nameOfNotes = {
 let previewLook = { 
     
         defaultYear: 2025,
+        defaultMonth: "february",
         defaultColor : "#614FE8", // value color inputu vyžaduje hexa formát
         defaultOrientation : "portrait",
         defaultFont : "bitter",
         defaultLanguage : "czech",
         defaultNotes : "on",
 
+        year: 2025,
+        month: "february",
+        language: "czech",
+ 
+
         setDefaultForm: function() {
             this.changeLanguage();
             this.changeYear();
+            this.changeMonth();
             this.changeColor();
             this.changeNotes();
             this.changeFont();
@@ -143,12 +154,13 @@ let previewLook = {
         },
 
 
-        changeYear: function(e) {
+        changeYear(e) {
             let selectedYear; 
 
             if (!e) {
                 selectedYear = previewLook.defaultYear;
                 previewYear.innerText = selectedYear;
+                buttonYearText.innerText = selectedYear;
                 renderingCal(true); // = načíst kalendář
                 let option = document.querySelector(`option[value="${previewLook.defaultYear}"]`);
                 option.setAttribute("selected", "");
@@ -156,6 +168,8 @@ let previewLook = {
             } else {
             selectedYear = parseInt(e.target.value);
             previewYear.innerText = selectedYear;
+            buttonYearText.innerText = selectedYear;
+            previewLook.year = selectedYear;
             renderingCal(false); // = znovu načíst kalendář
             }
 
@@ -163,22 +177,104 @@ let previewLook = {
             function renderingCal(isItFirstTime) {
 
            
-                let daysBefore = yearsJS[selectedYear].january[1];
-                let days = yearsJS[selectedYear].january[2];
-                let daysAfter = yearsJS[selectedYear].january[3];
+                let daysBefore = yearsJS[previewLook.year][previewLook.month][1];
+                //console.log(previewLook.year, previewLook.month, daysBefore);
+                let days = yearsJS[previewLook.year][previewLook.month][2]; // potrebuju to nejak s this.year a this.month :/
+                let daysAfter = yearsJS[previewLook.year][previewLook.month][3];
 
                 if (!isItFirstTime) {calendar.innerHTML= ``;}
 
-                for(let i = daysBefore[0]; i <= daysBefore[1]; i++) {
-                    generateNumbers(i, true);
+
+                if (daysBefore.length == 1) {
+                    generateNumbers(daysBefore[0], true);
+                } else {
+                    for(let j = daysBefore[0]; j <= daysBefore[1]; j++) {
+                        generateNumbers(j, true);
+                        //console.log(monthName, j);
+                    }
                 }
 
-                for(let i = days[0]; i <= days[1]; i++) {
-                    generateNumbers(i, false);
+                for(let k = days[0]; k <= days[1]; k++) {
+                    generateNumbers(k, false);
                 }
 
-                for(let i = daysAfter[0]; i <= daysAfter[1]; i++) {
-                generateNumbers(i, true);
+                if (daysAfter.length == 1) {
+                    generateNumbers(daysAfter[0], true)
+                } else {
+                    for(let m = daysAfter[0]; m <= daysAfter[1]; m++) {
+                        generateNumbers(m, true);
+                    }
+                }
+            }
+
+                function generateNumbers (i, isGray){
+                
+                    let day = document.createElement("span");
+                    day.innerHTML = i;
+                    calendar.appendChild(day);
+                    day.classList.add("grid-child");
+
+                    if(isGray){
+                    day.classList.add("gray-numbers");
+                    } else if(!isGray) {
+                    day.classList.add("changing-color");
+                    }
+            }
+        },
+
+        changeMonth(e) {
+            let selectedMonth; 
+            
+
+            if (!e) {
+                selectedMonth = previewLook.defaultMonth;
+                // console.log(previewLook.language);
+                // console.log(nameOfMonths.english.indexOf(selectedMonth));
+                // console.log(nameOfMonths[previewLook.language][nameOfMonths.english.indexOf(selectedMonth)]);
+                previewMonth.innerText = nameOfMonths[previewLook.language][nameOfMonths.english.indexOf(selectedMonth)];
+                buttonMonthText.innerText = selectedMonth;
+                // renderingCal(true); // = načíst kalendář NEPOTREBUJU, tohle se rendruje napopve pri loadingu uz pres changeYear
+                let option = document.querySelector(`option[value="${previewLook.defaultMonth}"]`);
+                option.setAttribute("selected", "");
+            
+            } else {
+            selectedMonth = e.target.value;
+            previewMonth.innerText = nameOfMonths[previewLook.language][nameOfMonths.english.indexOf(selectedMonth)];
+            buttonMonthText.innerText = selectedMonth;
+            previewLook.month = selectedMonth;
+            renderingCal(false); // = znovu načíst kalendář pri zmene
+            }
+
+            function renderingCal(isItFirstTime) {
+
+           
+                let daysBefore = yearsJS[previewLook.year][previewLook.month][1];
+                //console.log(previewLook.year, previewLook.month, daysBefore);
+                let days = yearsJS[previewLook.year][previewLook.month][2]; // potrebuju to nejak s this.year a this.month :/
+                let daysAfter = yearsJS[previewLook.year][previewLook.month][3];
+
+                if (!isItFirstTime) {calendar.innerHTML= ``;}
+
+
+                if (daysBefore.length == 1) {
+                    generateNumbers(daysBefore[0], true);
+                } else {
+                    for(let j = daysBefore[0]; j <= daysBefore[1]; j++) {
+                        generateNumbers(j, true);
+                        //console.log(monthName, j);
+                    }
+                }
+
+                for(let k = days[0]; k <= days[1]; k++) {
+                    generateNumbers(k, false);
+                }
+
+                if (daysAfter.length == 1) {
+                    generateNumbers(daysAfter[0], true)
+                } else {
+                    for(let m = daysAfter[0]; m <= daysAfter[1]; m++) {
+                        generateNumbers(m, true);
+                    }
                 }
             }
 
@@ -208,7 +304,9 @@ let previewLook = {
 
             }  else {
                // language = e.path[0].id; - nefungovalo pro firefox
-            language = e.target.id} // -> string
+                language = e.target.id;
+                previewLook.language = language;
+            } // -> string
             
             changeMonth(language);
             changeWeek(language);
@@ -216,7 +314,9 @@ let previewLook = {
             changeNotesLang(language);
 
             function changeMonth(language) {
-                previewMonth.innerHTML =  nameOfMonths[language][0]; 
+                let index = nameOfMonths.english.indexOf(previewLook.month);
+                
+                previewMonth.innerHTML =  nameOfMonths[language][index]; // 
             }
 
             function changeWeek(language) {
@@ -238,7 +338,7 @@ let previewLook = {
                 color.setAttribute("value", `${previewLook.defaultColor}`);
             } else {
                 root.style.setProperty(`--color-for-preview`, e.target.value);
-                color.setAttribute("value", e.target.value)}
+                color.setAttribute("value", e.target.value)};
         },
 
         changeOrientation: function(e) {
@@ -260,6 +360,7 @@ let previewLook = {
 
                 previewOrientation.classList.toggle("orientation-landscape");    
                 previewOrientation.classList.toggle("orientation-portrait"); 
+        
             }
         },
 
@@ -302,6 +403,7 @@ let previewLook = {
 previewLook.setDefaultForm(); // ten zahrnuje všechny initial calls
 
 formYear.addEventListener("input", previewLook.changeYear);
+formMonth.addEventListener("input", previewLook.changeMonth);
 formLanguages.forEach((formLang) => {formLang.addEventListener("input", previewLook.changeLanguage)});
 orientationForm.forEach((orient) => {orient.addEventListener("input", previewLook.changeOrientation)});
 color.addEventListener("input", previewLook.changeColor);
@@ -339,12 +441,19 @@ function handleSubmit(e) {
     // console.log(Array.from(formEntries));
     //console.log("json", json); // objekt, prototype Object
 
-    generatePlanner(json);
+    // console.dir(e.submitter.id);
+
+
+    if (e.submitter.id === "submit-button" ) {
+        generatePlanner(json); 
+    } else {
+        generateMonthPlanner(json);
+    }
 }
 
 
 
-generatorForm.addEventListener("submit", handleSubmit);
+generatorForm.addEventListener("submit", handleSubmit); // na obe submit tlacitka
 
 
 
@@ -355,8 +464,9 @@ function generatePlanner(json) {
 
 
     class Planner { // na pořadí u constructoru záleží
-        constructor(year, color, orientation, font, language, notes) {
+        constructor(year, month, color, orientation, language, font, notes) {
             this.year = year;
+            this.month = month;
             this.color = color;
             this.orientation = orientation;
             this.font = font;
@@ -538,6 +648,215 @@ function generatePlanner(json) {
     //console.log("newPlanner", newPlanner);
     newPlanner.createPlanner(); 
 }
+
+
+// --------- Month planner ----------------
+
+function generateMonthPlanner(json) {
+  
+
+    class MonthPlanner { // na pořadí u constructoru záleží
+        constructor(year, month, color, orientation, language, font, notes) {
+            this.year = year;
+            this.month = month;
+            this.color = color;
+            this.orientation = orientation;
+            this.font = font;
+            this.language = language;
+            this.notes = notes;
+        }
+
+        createPlanner() {
+
+            let pageWidth;
+            let pageHeight;
+
+            if(this.orientation === "landscape") {
+                    pageWidth = 297;
+                    pageHeight = 210;
+                } else {
+                    pageWidth = 210;
+                    pageHeight = 297;   
+            }
+
+            document.getElementById("preview-container").style.fontFamily = this.font;
+
+            let temp = document.getElementsByTagName("template")[0];            
+
+           
+
+            let cloneMonth, itemMonth, indexOfMonth;
+
+                cloneMonth = temp.content.cloneNode(true);
+                itemMonth = cloneMonth.querySelector(".template");
+                itemMonth.classList.add("month");
+                // itemMonth.style.scale = `2`; NENI RESENIM, PAC SE MENI RESPONZIVNE
+              //  debugger;
+              indexOfMonth = nameOfMonths.english.indexOf(this.month);
+              console.log(indexOfMonth);
+            
+                itemMonth.classList.add(`${nameOfMonths["english"][indexOfMonth]}`);
+               // - místo toho je appenduju naráz přes jejich class měsíců ??
+
+                let contentMonthName = itemMonth.querySelector("h3");
+                contentMonthName.textContent = nameOfMonths[this.language][indexOfMonth];
+
+                let contentYear = itemMonth.querySelector(".name-of-year");
+                contentYear.textContent = this.year;
+
+                let contentDaysName = itemMonth.querySelectorAll(".day-of-week");
+                    for(let d = 0; d < 7; d++){
+                    contentDaysName[d].textContent = nameOfDaysOfWeek[this.language][d];
+                    }
+          
+                let contentNotes = itemMonth.querySelector(".preview__notes");
+                      
+                if (this.notes !== "on") {
+                contentNotes.classList.add("no-notes");
+                }
+
+
+               
+
+                // let monthCurrent = document.querySelectorAll(".month")[i];
+                let calendarCurrent = itemMonth.querySelector(".calendar");
+                // // console.log(monthCurrent);
+                
+                function generateNumbers (o, isGray){
+                            
+                    let day = document.createElement("span");
+                    day.innerHTML = o;
+                    day.classList.add("grid-child");
+
+                    if(isGray){
+                    day.classList.add("gray-numbers");
+                    } else if(!isGray) {
+                    day.classList.add("changing-color");
+                    }        
+
+                    calendarCurrent.appendChild(day);
+                    //console.log(monthName, o); // CHYBA, KDYZ JE V ARRAY JEN JEDNO CISLO !!!!!!
+                }
+
+
+               
+                
+                    let monthName = nameOfMonths["english"][indexOfMonth];
+                        // nebo přes class toho měsíce
+                
+                    //  console.log(year, notes, " funguje!");
+                    
+                    // console.log("zkouška" + i + years[`${selectedYear}`][`${monthName}`][1]); 
+                
+                    let daysBefore, days, daysAfter;
+
+                    daysBefore = yearsJS[this.year][`${monthName}`][1];
+                    days = yearsJS[this.year][`${monthName}`][2];
+                    daysAfter = yearsJS[this.year][`${monthName}`][3]; //smyčku s vytvořením 
+                        //kalendáře až po naplnění těchto variables
+                   /* console.log(
+                        daysBefore, days, daysAfter, monthName
+                    );*/
+                    
+                        if (daysBefore.length == 1) {
+                            generateNumbers(daysBefore[0], true);
+                        } else {
+                            for(let j = daysBefore[0]; j <= daysBefore[1]; j++) {
+                                generateNumbers(j, true);
+                                //console.log(monthName, j);
+                            }
+                        }
+
+                        for(let k = days[0]; k <= days[1]; k++) {
+                                generateNumbers(k, false);
+                        }
+
+                        if (daysAfter.length == 1) {
+                            generateNumbers(daysAfter[0], true)
+                        } else {
+                            for(let m = daysAfter[0]; m <= daysAfter[1]; m++) {
+                                generateNumbers(m, true);
+                            }
+                        }
+                        
+                
+
+            
+
+                 document.getElementById("preview-orientation").appendChild(cloneMonth); 
+                    //*
+        
+           
+            
+
+            /************ ASYNCHRONNÍ JS - MUSÍ BÝT KVŮLI HTML2CANVAS."AŽ JE FOR LOOP HOTOVÁ, UDĚLEJ TOHLE" přes if statement */
+            let months = [];
+            let renderingOptions = {backgroundColor: "#113", scale:1};
+            let currentPlanner = new jsPDF({orientation: this.orientation, unit: "mm"});
+            
+            let monthsCurrent = document.querySelectorAll(".template.month");
+
+            
+
+            let month = document.querySelectorAll(".month")[0]; // TOHLE MI MÁ DÁT <DIV> - potřebuju teda
+                      
+                        //console.log("wtf:   " + month);
+
+                        html2canvas(month, renderingOptions)
+                                .then(canvas => {
+                                    let month__dataURL = canvas.toDataURL("image/png");
+                                    months.push(month__dataURL); 
+                                  
+                                   
+                                       // console.log("začátek druhýho promisu před druhou smyčkou");
+                                       
+                                            currentPlanner.addImage(months[0], `JPEG`, 0, 0, pageWidth, pageHeight);
+                                            //console.log("druhý promis");
+                                           
+                                                // currentPlanner.addPage();
+                                            
+                                                document.querySelector(".loader-frame").classList.add("loader-nonactive");
+                                                currentPlanner.save(`planner.pdf`);
+                                                /*a nakonec vymazat všechny .template.month kromě preview */
+                                               monthsCurrent.forEach(month => month.remove());
+                                               // a mozna vyresetovat nejaky variables, aby sel stahnout planner hned znovu?
+                                               
+                                            
+                                        
+                                    
+                                }
+                        )
+                    }
+            
+           
+            
+        }
+        
+    let newMonthPlanner = new MonthPlanner(...Object.values(json));
+    console.log(newMonthPlanner);
+    newMonthPlanner.createPlanner();
+    
+  //  const monthPlanner;
+
+
+ // zacatek loaderu:
+    // document.getElementsByTagName("body")[0].appendChild(loader);
+    // document.querySelector(".loader-frame").classList.remove("loader-nonactive");
+
+
+
+
+// konec loaderu:
+    // document.querySelector(".loader-frame").classList.add("loader-nonactive");
+
+//save monthPlanner:
+    //monthPlanner.save(`planner.pdf`);
+
+
+}
+
+
+
 
 //---------- gallery 
 
