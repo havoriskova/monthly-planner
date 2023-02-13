@@ -171,6 +171,7 @@ h2 {
   padding-top: 6rem; /*kvůli  navigaci, aby při hoveru šlo vidět 
   jednolité pozadí*/
   text-align: justify;
+  line-height: 1.5rem;
   color: white;
   background-image: var(--pattern-black);
   background-size: var(--pattern-size);
@@ -861,6 +862,11 @@ footer {
 
 @media (max-width: 565px) {
 
+
+  #about p {
+    font-size: 14px;
+  }
+  
   .preview {
     font-size: 0.45rem;
   }
@@ -882,6 +888,11 @@ footer {
   form {
     font-size: 0.75rem;
   }
+
+  form p {
+    font-size: 14px;
+  }
+
 
   #submit-button {
     display: none;
