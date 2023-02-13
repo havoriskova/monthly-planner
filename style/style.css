@@ -1,7 +1,8 @@
 :root {
   --golden: rgb(241, 224, 224);
-  --pattern-size: 20%;
+  --pattern-size: 5%;
   --pattern-white: url("./img/pattern-white-5.png");
+  --pattern-black: url("./img/pattern-black-4.png");
   --color-for-preview: black;
  --secondary-color: rgb(32, 32, 32);
 }
@@ -32,8 +33,8 @@ body {
   position: relative;
 }
 
-.alertForPhones {
- display: none; /*grid*/
+/* .alertForPhones {
+ display: none;
  position: absolute;
  inset: 0;
  background-color: rgba(0 0 0 / 0.6);
@@ -83,7 +84,7 @@ body {
   width: 35px;
   height: 6px;
   transform: rotate(-45deg);
-}
+} */
 
 header {
   position: absolute;
@@ -147,9 +148,13 @@ h1 a {
 }
 
 nav li a:hover {
-  background-color: var(--secondary-color);
+  /* background-color: var(--secondary-color); */
   color: white;
   background-image: none;
+  background-image: var(--pattern-black);
+  background-size: var(--pattern-size);
+  background-attachment: fixed;
+  background-repeat: repeat;
 }
 
 aside,
@@ -167,6 +172,10 @@ h2 {
   jednolité pozadí*/
   text-align: justify;
   color: white;
+  background-image: var(--pattern-black);
+  background-size: var(--pattern-size);
+  background-attachment: fixed;
+  background-repeat: repeat;
 }
 
 /**/
@@ -575,6 +584,11 @@ span.polygon {
 
 #gallery {
   padding-bottom: 3rem;
+  background-image: var(--pattern-black);
+  background-size: var(--pattern-size);
+  background-attachment: fixed;
+  background-repeat: repeat;
+  
 }
 
 #grid-parent {
@@ -679,6 +693,12 @@ footer {
 }
 
 @media (max-width: 1200px) {
+
+  :root {
+    --pattern-size: 15%;
+  }
+
+
   aside,
   main {
     padding-left: 1rem;
@@ -701,6 +721,11 @@ footer {
 }
 
 @media (max-width: 900px) {
+
+  :root {
+    --pattern-size: 20%;
+  }
+
   header {
     display: block;
   }
