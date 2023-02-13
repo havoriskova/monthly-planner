@@ -685,18 +685,21 @@ function generateMonthPlanner(json) {
 
            
 
-            let cloneMonth, itemMonth;
+            let cloneMonth, itemMonth, indexOfMonth;
 
                 cloneMonth = temp.content.cloneNode(true);
                 itemMonth = cloneMonth.querySelector(".template");
                 itemMonth.classList.add("month");
                 // itemMonth.style.scale = `2`; NENI RESENIM, PAC SE MENI RESPONZIVNE
               //  debugger;
-                itemMonth.classList.add(`${nameOfMonths["english"][0]}`);
+              indexOfMonth = nameOfMonths.english.indexOf(this.month);
+              console.log(indexOfMonth);
+            
+                itemMonth.classList.add(`${nameOfMonths["english"][indexOfMonth]}`);
                // - místo toho je appenduju naráz přes jejich class měsíců ??
 
                 let contentMonthName = itemMonth.querySelector("h3");
-                contentMonthName.textContent = nameOfMonths[this.language][0];
+                contentMonthName.textContent = nameOfMonths[this.language][indexOfMonth];
 
                 let contentYear = itemMonth.querySelector(".name-of-year");
                 contentYear.textContent = this.year;
@@ -738,7 +741,7 @@ function generateMonthPlanner(json) {
 
                
                 
-                    let monthName = nameOfMonths["english"][0];
+                    let monthName = nameOfMonths["english"][indexOfMonth];
                         // nebo přes class toho měsíce
                 
                     //  console.log(year, notes, " funguje!");
@@ -810,7 +813,7 @@ function generateMonthPlanner(json) {
                                             currentPlanner.addImage(months[0], `JPEG`, 0, 0, pageWidth, pageHeight);
                                             //console.log("druhý promis");
                                            
-                                                currentPlanner.addPage();
+                                                // currentPlanner.addPage();
                                             
                                                 document.querySelector(".loader-frame").classList.add("loader-nonactive");
                                                 currentPlanner.save(`planner.pdf`);
@@ -829,8 +832,9 @@ function generateMonthPlanner(json) {
             
         }
         
-    let newPlanner = new MonthPlanner(...Object.values(json));
-    newPlanner.createPlanner();
+    let newMonthPlanner = new MonthPlanner(...Object.values(json));
+    console.log(newMonthPlanner);
+    newMonthPlanner.createPlanner();
     
   //  const monthPlanner;
 
