@@ -139,6 +139,7 @@ let previewLook = {
 
         year: 2025,
         month: "february",
+        language: "czech",
 
         setDefaultForm: function() {
             this.changeLanguage();
@@ -241,7 +242,8 @@ let previewLook = {
 
             }  else {
                // language = e.path[0].id; - nefungovalo pro firefox
-            language = e.target.id} // -> string
+                language = e.target.id
+            } // -> string
             
             changeMonth(language);
             changeWeek(language);
@@ -249,7 +251,9 @@ let previewLook = {
             changeNotesLang(language);
 
             function changeMonth(language) {
-                previewMonth.innerHTML =  nameOfMonths[language][0]; // 
+                let index = nameOfMonths.english.indexOf(previewLook.month);
+                
+                previewMonth.innerHTML =  nameOfMonths[language][index]; // 
             }
 
             function changeWeek(language) {
