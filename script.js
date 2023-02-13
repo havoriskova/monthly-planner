@@ -128,18 +128,36 @@ const nameOfNotes = {
             english: "Notes"
             }
 
+function getCurrentYear() {
+
+    let now = new Date();
+    const currentYear = now.getFullYear();
+
+    return currentYear;
+
+}
+
+
+function getCurrentMonth() {
+    let now = new Date();
+    const currentMonth = nameOfMonths.english[now.getMonth()]; // 0-11
+
+    return currentMonth;
+}
+
+
 let previewLook = { 
     
-        defaultYear: 2025,
-        defaultMonth: "february",
+        defaultYear: getCurrentYear(),
+        defaultMonth: getCurrentMonth(),
         defaultColor : "#614FE8", // value color inputu vyžaduje hexa formát
         defaultOrientation : "portrait",
         defaultFont : "bitter",
         defaultLanguage : "czech",
         defaultNotes : "on",
 
-        year: 2025,
-        month: "february",
+        year: getCurrentYear(),
+        month: getCurrentMonth(),
         language: "czech",
  
 
