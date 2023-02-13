@@ -422,12 +422,12 @@ function handleSubmit(e) {
 
     // submit only for PC, not for phones (it is taking too long for phones to generate the planner): 
 
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        let alert = document.querySelector('#alertForPhones');
-        alert.style.display = 'grid';
-        alert.addEventListener('click', () => alert.style.display = 'none');
-        return
-      }
+    // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    //     let alert = document.querySelector('#alertForPhones');
+    //     alert.style.display = 'grid';
+    //     alert.addEventListener('click', () => alert.style.display = 'none');
+    //     return
+    //   }
 
 
     //console.log("tadá event objekt" ,  e);
